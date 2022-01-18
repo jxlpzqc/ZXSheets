@@ -34,3 +34,5 @@ class SumFunction implements IFunction {
         return sum;
     }
 }
+
+export default [SumFunction]
