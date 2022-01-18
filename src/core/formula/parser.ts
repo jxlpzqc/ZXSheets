@@ -1,4 +1,5 @@
 import { IRange } from "../base/range";
+import { FunctionType } from "../functions/function";
 import { Range, isRangeStr } from "../sheet/range";
 import { ParseError, ParseErrorType } from "./error";
 import { Decimal, Real, strToNumber } from "./number";
@@ -11,16 +12,10 @@ import "./stack";
  */
 type Value = Real | string;
 
-export enum FormulaTreeResultType {
-    Value = 'value',
-    IRange = 'ref',
-    Array = 'array'
-}
-
 export interface FormulaTreeNode {
     functionName: string;
     values: FormulaTreeResult[];
-    returnType: FormulaTreeResultType;
+    returnType: FunctionType;
 }
 
 type FormulaTreeResult = FormulaTreeNode | Value | IRange | Value[];

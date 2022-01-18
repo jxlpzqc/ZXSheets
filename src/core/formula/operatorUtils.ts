@@ -1,7 +1,6 @@
-import { FormulaTreeResultType } from "./parser";
+import { FunctionType } from "../functions/function";
 
 
-export function getOperatorReturnType(op: string): FormulaTreeResultType {
-    // TODO implements it
-    return FormulaTreeResultType.Value;
+export function getOperatorReturnType(op: string): FunctionType {
+    return 'number';
 }
