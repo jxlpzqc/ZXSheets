@@ -1,6 +1,7 @@
 export enum ParseErrorType {
     SyntaxError = "SyntaxError",
-    IllegalCharacterError = "IllegalCharacterError"
+    IllegalCharacterError = "IllegalCharacterError",
+    FunctionNotFound = "FunctionNotFound"
 }
 
 export class ParseError extends Error {

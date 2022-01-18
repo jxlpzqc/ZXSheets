@@ -2,9 +2,25 @@ import { IRange } from "../base/range";
 import { FunctionType } from "../functions/function";
 import { Range, isRangeStr } from "../sheet/range";
 import { ParseError, ParseErrorType } from "./error";
-import { Decimal, Real, strToNumber } from "./number";
-import { getOperatorReturnType } from "./operatorUtils";
-import "./stack";
+import { Real, strToNumber } from "./number";
+import { getOperatorReturnType } from "./utils";
+
+// Stack Defs
+/**
+ * 给数组加入一些关于栈的方法和属性
+ */
+Object.defineProperty(Array.prototype, "top", {
+    get() {
+        //@ts-ignore
+        return (this[this.length - 1]);
+    }
+})
+
+declare global {
+    interface Array<T> {
+        top: T;
+    }
+}
 
 
 /**
@@ -15,10 +31,10 @@ type Value = Real | string;
 export interface FormulaTreeNode {
     functionName: string;
     values: FormulaTreeResult[];
-    returnType: FunctionType;
+    returnType: FunctionType | 'uncertain';
 }
 
-type FormulaTreeResult = FormulaTreeNode | Value | IRange | Value[];
+export type FormulaTreeResult = FormulaTreeNode | Value | IRange | Value[];
 
 // 入栈优先度  留栈优先度
 const operatorPriority: { [key: string]: number[] } = {
@@ -57,7 +73,7 @@ class FormulaParser {
      */
     private mode = 0;
 
-    private arrayForInput: Decimal[] = [];
+    private arrayForInput: Real[] = [];
 
     /**
      * 符号栈，用于处理符号和函数
@@ -85,7 +101,7 @@ class FormulaParser {
         const node: FormulaTreeNode = {
             functionName: popOp,
             values: [],
-            returnType: getOperatorReturnType(popOp)
+            returnType: 'uncertain'
         }
 
         let cmpOp: string;
@@ -111,7 +127,13 @@ class FormulaParser {
                 node.values.push(p);
             }
         }
-
+        // -- 解析时不需要确定类型
+        // let rType = getOperatorReturnType(node.functionName, node.values);
+        // if (!rType) {
+        //     throw new ParseError(ParseErrorType.FunctionNotFound, -1,
+        //         `function which name is ${node.functionName} and args is ${node.values.toString()} is not found.`)
+        // } 
+        // node.returnType = rType;
         this.items.push(node);
     }
 
@@ -332,12 +354,9 @@ class FormulaParser {
     }
 }
 
-
 function isLegalFunctionName(name: string) {
     return /^[\u4E00-\u9FA5A-Za-z_][\u4E00-\u9FA5A-Za-z0-9_]*$/.test(name);
 }
-
-
 
 /**
  * 解析一个公式，生成表达式树
@@ -348,3 +367,4 @@ function isLegalFunctionName(name: string) {
 export function parseFormula(content: string): FormulaTreeResult {
     return new FormulaParser(content).parse();
 }
+

@@ -14,3 +14,7 @@ export interface IRange {
     desc: string;
     getAllCells(): ICell[];
 }
+
+export function isRange(obj: any): boolean {
+    return 'getAllCells' in obj;
+}

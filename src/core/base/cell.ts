@@ -1,7 +1,8 @@
+import { Style } from "./defs/style";
 import { ICellReference } from "./reference";
 
 export enum CellType {
-    NumberCell = "number",
+    NormalCell = "number",
     TextCell = "text",
     RichTextCell = "html"
 }
@@ -12,8 +13,15 @@ export interface ICell {
      */
     id: string;
     type: CellType;
-    content: string;
-    value: string;
-    influencedCell: ICellReference;
+    /**
+     * 用户输入的值
+     */
+    content: any;
+    /**
+     * 计算出来的值
+     */
+    value: any;
+    influencedCell?: ICellReference;
     enableEdit: boolean;
+    style?: Style;
 }

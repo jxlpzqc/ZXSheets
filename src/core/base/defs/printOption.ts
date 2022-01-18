@@ -1,4 +1,4 @@
-import { IRange } from "./range";
+import { IRange } from "../range";
 
 export enum PageOrientation {
     Portrait,
@@ -53,7 +53,7 @@ export interface MarginOption {
 }
 
 export interface PageSettings {
-    oritation: PageOrientation;
+    orientation: PageOrientation;
     margins: MarginOption;
     pageSize: PageSizeOption;
     firstPageNumber: number | "auto",

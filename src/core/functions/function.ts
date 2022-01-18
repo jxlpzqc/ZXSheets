@@ -1,4 +1,4 @@
-export type FunctionType = 'number' | 'text' | 'bool' | 'aray' | 'object' | 'ref' | 'varargs';
+export type FunctionType = 'number' | 'text' | 'bool' | 'array_n' | 'array_s' | 'object' | 'ref' | 'varargs';
 
 export interface IFunction {
     name: string;
