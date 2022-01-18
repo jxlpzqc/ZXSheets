@@ -99,3 +99,7 @@ export function exactIndex(index: string): number[] {
         throw new Error("Invalid index!");
     }
 }
+
+export function arrToIndexStr(arr: number[]): string {
+    return indexNumberToLetter(arr[0]) + arr[1];
+}

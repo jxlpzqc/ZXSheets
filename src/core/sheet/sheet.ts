@@ -7,7 +7,7 @@ import { RangeDef } from "../base/defs/rangedef";
 import { RowDef } from "../base/defs/rowdef";
 import { Style } from "../base/defs/style";
 import { Defaults } from "../global/defaults";
-import { indexLetterToNumber } from "./utils";
+import { exactIndex, indexLetterToNumber } from "./utils";
 
 export class Sheet implements ISheet {
     getColumnWidth(index: number): number {
@@ -45,6 +45,7 @@ export class Sheet implements ISheet {
         let c = this.cells.find(u => u.id == index);
         if (!c) {
             c = new Cell(index);
+            this.cells.push(c);
         }
         c.content = content;
     }
@@ -54,8 +55,17 @@ export class Sheet implements ISheet {
         if (c != -1) this.cells.splice(c, 1);
     }
     getCellsInRect(a: string, b: string): ICell[] {
-
-        throw new Error("Method not implemented.");
+        const ai = exactIndex(a);
+        const bi = exactIndex(b);
+        const ret: ICell[] = [];
+        
+        for (const cell of this.cells) {
+            const celli = exactIndex(cell.id);
+            if (celli[0] >= ai[0] && celli[0] <= bi[0] && celli[1] >= ai[1] && celli[1] <= bi[1]) {
+                ret.push(cell);
+            }
+        }
+        return ret;
 
     }
     getCell(index: string): ICell | undefined {

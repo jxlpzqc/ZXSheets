@@ -337,7 +337,12 @@ class FormulaParser {
                 }
             }
         }
-        if (this.sep != '') this.items.push(this.sep);
+        if (this.sep != '' && this.mode == 1) {
+            if (!isRangeStr(this.sep))
+                throw new ParseError(ParseErrorType.SyntaxError, this.content.length - 1, `Invalid Range String ${this.sep}.`)
+            this.items.push(new Range(this.sep));
+        }
+        else if (this.sep != '') this.items.push(this.sep);
     }
 
     handleRemainedOperators() {

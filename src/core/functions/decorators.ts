@@ -10,7 +10,8 @@ export function SheetFunction(): ClassDecorator;
 export function SheetFunction(a?: any, b?: any, c?: any): ClassDecorator {
 
     return (constructor: Function) => {
-        let cls = constructor.prototype;
+        //@ts-ignore
+        let cls = new constructor();
         let clsName = constructor.name;
 
         if ('name' in cls && 'returnType' in cls && 'argsType' in cls && 'fun' in cls) {

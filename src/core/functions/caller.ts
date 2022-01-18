@@ -45,6 +45,6 @@ export function GetFunction(functionName: string, ...args: any[]): IFunction | u
             throw new Error(`Unsupported Type at arg: ` + arg);
         }
     }
-    return GetFunctionContainer().GetFunction(functionName, ...args);
+    return GetFunctionContainer().GetFunction(functionName, ...types);
 
 }

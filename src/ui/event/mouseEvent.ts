@@ -30,7 +30,8 @@ export function handleMouseDown(e: MouseEventArgs) {
 
 export function handleMouseMove(e: MouseEventArgs) {
     const { view } = e;
-    if (mousedown) {
+
+    if (mousedown && (e.e as MouseEvent).buttons == 1) {
         if (sType == 'cell' && e.item.type == 'cell') {
             const index1 = exactIndex(view.focusedCell);
             const index2 = exactIndex(e.item.desc!);

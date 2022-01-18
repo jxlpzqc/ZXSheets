@@ -68,6 +68,7 @@ export class FunctionContainer {
 }
 
 function checkFunctionValidity(fun: IFunction): boolean {
+    if (/^[\+\-\*\/\^\%\&\=]$/.test(fun.name) || /^[\>\<]=?$/.test(fun.name)) return true;
     if (!isLegalFunctionName(fun.name)) return false;
     if (fun.argsType.length) {
         for (let i = 0; i < fun.argsType.length - 1; i++) {
@@ -128,3 +129,9 @@ function compareFunPriority(fun1: IFunction, fun2: IFunction): number {
 export function GetFunctionContainer(): FunctionContainer {
     return FunctionContainer.getInstance();
 }
+
+
+import './impl/operators';
+import './impl/sum';
+
+console.log(FunctionContainer.getInstance());

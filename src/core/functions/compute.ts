@@ -6,6 +6,8 @@ import { isFormulaTreeNode, isFormulaValue } from "../formula/utils";
 import { GetFunction } from "./caller";
 
 export function computeFormula(formula: FormulaTreeResult): any {
+    console.log("1");
+    
     if (isFormulaValue(formula) || formula instanceof Array) return formula;
     else if (isRange(formula)) return formula;
     else if (isFormulaTreeNode(formula)) {

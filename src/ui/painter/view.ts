@@ -1,6 +1,7 @@
 import { ISheet } from "../../core/base/sheet";
-import { cmpIndex, CmpIndexResult, exactIndex, indexLetterToNumber, indexNumberToLetter, isALeftTopOfB } from "../../core/sheet/utils";
+import { arrToIndexStr, cmpIndex, CmpIndexResult, exactIndex, indexLetterToNumber, indexNumberToLetter, isALeftTopOfB } from "../../core/sheet/utils";
 import { handleMouseDown, handleMouseMove, handleMouseup } from "../event/mouseEvent";
+import { Rect, renderCell } from "../renderer/cellRender";
 
 export interface SheetViewObj {
     type: 'cell' | 'fillPoint' | 'column' | 'row' | 'columnResizer' | 'rowResizer' | 'all',
@@ -39,6 +40,13 @@ export class SheetView {
     public enabled = true;
 
     private _startCellIndex: number[] = [1, 1];
+    private get _endCellIndex(): number[] {
+        return [
+            this._startCellIndex[0] + this.columnsXs.length - 2,
+            this._startCellIndex[0] + this.rowYs.length - 2
+        ]
+    }
+
     public get startCellIndex(): string {
         return (indexNumberToLetter(this._startCellIndex[0]) + this._startCellIndex[1].toString());
     }
@@ -99,7 +107,7 @@ export class SheetView {
         this.draw();
     }
 
-    private _selection = [1, 1, 3, 3];
+    private _selection = [1, 1, 1, 1];
 
     private get selectionStartStr() {
         return indexNumberToLetter(this._selection[0]) + this._selection[1].toString();
@@ -179,7 +187,8 @@ export class SheetView {
                 view: this,
                 item: obj,
                 x: s(e.offsetX),
-                y: s(e.offsetY)
+                y: s(e.offsetY),
+                e
             });
         });
 
@@ -189,7 +198,8 @@ export class SheetView {
                 view: this,
                 item: obj,
                 x: s(e.offsetX),
-                y: s(e.offsetY)
+                y: s(e.offsetY),
+                e
             });
         });
 
@@ -199,7 +209,8 @@ export class SheetView {
                 view: this,
                 item: obj,
                 x: s(e.offsetX),
-                y: s(e.offsetY)
+                y: s(e.offsetY),
+                e
             });
         });
 
@@ -370,7 +381,20 @@ export class SheetView {
 
     }
     private drawCells() {
-        //throw new Error("Method not implemented.");
+        let cells = this.sheet.getCellsInRect(arrToIndexStr(this._startCellIndex), arrToIndexStr(this._endCellIndex));
+        let ctx = this.mainCanvas.getContext("2d")!;
+     
+        for (const cell of cells) {
+            const i = exactIndex(cell.id);
+            const rect: Rect = {
+                x: this.columnsXs[i[0] - this._startCellIndex[0]] + 2,
+                y: this.rowYs[i[1] - this._startCellIndex[1]] + 2,
+                w: this.columnsXs[i[0] - this._startCellIndex[0] + 1] - this.columnsXs[i[0] - this._startCellIndex[0]] - 4,
+                h: this.rowYs[i[1] - this._startCellIndex[1] + 1] - this.rowYs[i[1] - this._startCellIndex[1]] - 4
+            }
+
+            renderCell(ctx, cell, rect, rect);
+        }
     }
 
     private columnsXs: number[] = [];

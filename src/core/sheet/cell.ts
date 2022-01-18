@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import { CellType, ICell } from "../base/cell";
 import { Style } from "../base/defs/style";
 import { ICellReference } from "../base/reference";
@@ -38,8 +39,9 @@ export class Cell implements ICell {
         else if (this._content.startsWith('\'')) {
             this._value = this._content.substring(1, this._content.length - 1);
         }
-        else if (this._content.startsWith('=')) {
-            let formula = this._content.substring(1, this._content.length - 1);
+        else if (this._content.startsWith('=')) 
+        {
+            let formula = this._content.substring(1, this._content.length);
             if (this.formulaInfo.formula != formula) {
                 try {
                     this.formulaInfo.result = parseFormula(formula);
@@ -50,8 +52,18 @@ export class Cell implements ICell {
                     this._value = "#PARSE_ERR"
                 }
             }
-            this._value = computeFormula(formula);
+            this._value = computeFormula(this.formulaInfo.result!);
         }
+        else {
+            const l = new BigNumber(this._content);
+            if (l.isNaN()) {
+                this._value = this._content;
+            } else {
+                this._value = l;
+            }
+
+        }
+
     }
 }
 

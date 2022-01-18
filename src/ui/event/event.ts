@@ -4,6 +4,7 @@ export interface EventArgs {
     view: SheetView;
     item: SheetViewObj;
     attachment?: any;
+    e: Event
 }
 
 

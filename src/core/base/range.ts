@@ -16,5 +16,5 @@ export interface IRange {
 }
 
 export function isRange(obj: any): boolean {
-    return 'getAllCells' in obj;
+    return typeof (obj) == 'object' && 'desc' in obj;
 }
