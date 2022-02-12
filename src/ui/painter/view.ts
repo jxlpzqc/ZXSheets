@@ -11,7 +11,7 @@ export interface SheetViewObj {
 
 
 let drawOffset1 = 0;
-let drawOffset2 = 0;
+const drawOffset2 = 0;
 const o1 = (v: number) => (v + drawOffset1);
 const o2 = (v: number) => (v + drawOffset2);
 
@@ -125,7 +125,7 @@ export class SheetView {
     }
 
     public set selection(value: string[]) {
-        //TODO 支持多选区
+        // TODO 支持多选区
         if (isALeftTopOfB(value[0], value[1])) {
             this._selection =
                 exactIndex(value[0])
@@ -263,7 +263,7 @@ export class SheetView {
 
     private setViewport() {
 
-        //解决高dpi问题
+        // 解决高dpi问题
         const dpi = window.devicePixelRatio || 1;
 
         this.tWidth = this.block.clientWidth * dpi;
@@ -280,7 +280,7 @@ export class SheetView {
     }
 
     private initializeCanvas() {
-        //解决高dpi问题
+        // 解决高dpi问题
         const dpi = window.devicePixelRatio || 1;
         this._scale = dpi;
 
@@ -310,7 +310,7 @@ export class SheetView {
         let s1: number, s2: number, e1: number, e2: number;
         let index: number;
 
-        //确定左上角坐标
+        // 确定左上角坐标
         index = this._selection[0] - this._startCellIndex[0];
         if (index >= this.columnsXs.length) return;
         else if (index < 0) s1 = 0;
@@ -321,7 +321,7 @@ export class SheetView {
         else if (index < 0) s2 = 0;
         else s2 = this.rowYs[index];
 
-        //确定右下角坐标
+        // 确定右下角坐标
         index = this._selection[2] - this._startCellIndex[0] + 1;
         if (index >= this.columnsXs.length) e1 = this.tWidth;
         else e1 = this.columnsXs[index];
@@ -350,7 +350,7 @@ export class SheetView {
         }
 
 
-        //确定左上角坐标
+        // 确定左上角坐标
         index = this._focusedCell[0] - this._startCellIndex[0];
         if (index >= this.columnsXs.length) return;
         else if (index < 0) s1 = 0;
@@ -361,7 +361,7 @@ export class SheetView {
         else if (index < 0) s2 = 0;
         else s2 = this.rowYs[index];
 
-        //确定右下角坐标
+        // 确定右下角坐标
         index = this._focusedCell[0] - this._startCellIndex[0] + 1;
         if (index >= this.columnsXs.length) e1 = this.tWidth;
         else e1 = this.columnsXs[index];
@@ -381,9 +381,9 @@ export class SheetView {
 
     }
     private drawCells() {
-        let cells = this.sheet.getCellsInRect(arrToIndexStr(this._startCellIndex), arrToIndexStr(this._endCellIndex));
-        let ctx = this.mainCanvas.getContext("2d")!;
-     
+        const cells = this.sheet.getCellsInRect(arrToIndexStr(this._startCellIndex), arrToIndexStr(this._endCellIndex));
+        const ctx = this.mainCanvas.getContext("2d")!;
+
         for (const cell of cells) {
             const i = exactIndex(cell.id);
             const rect: Rect = {

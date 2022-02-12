@@ -1,7 +1,7 @@
 import { FunctionContainer, GetFunctionContainer } from "./container";
 import { FunctionType, IFunction } from "./function";
 
-//声明重载函数
+// 声明重载函数
 export function SheetFunction(functionName: string, argsType: FunctionType[], returnType: FunctionType): ClassDecorator;
 export function SheetFunction(argsType: FunctionType[], returnType: FunctionType): ClassDecorator;
 export function SheetFunction(): ClassDecorator;
@@ -10,12 +10,12 @@ export function SheetFunction(): ClassDecorator;
 export function SheetFunction(a?: any, b?: any, c?: any): ClassDecorator {
 
     return (constructor: Function) => {
-        //@ts-ignore
-        let cls = new constructor();
+        // @ts-ignore
+        const cls = new constructor();
         let clsName = constructor.name;
 
         if ('name' in cls && 'returnType' in cls && 'argsType' in cls && 'fun' in cls) {
-            let fun = cls as IFunction;
+            const fun = cls as IFunction;
 
             if (!a && !b && !c) {
                 fun.name = fun.name.toLowerCase();

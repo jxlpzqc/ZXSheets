@@ -42,7 +42,7 @@ export function handleMouseMove(e: MouseEventArgs) {
         }
         else if (sType == 'all') { }
         else if (sType == 'column') {
-            //hit test
+            // hit test
             const desc = view.PositionToObj(e.x, 0).desc!;
 
             if (indexLetterToNumber(desc!) >= exactIndex(view.focusedCell)[0]) {
@@ -55,7 +55,7 @@ export function handleMouseMove(e: MouseEventArgs) {
 
         }
         else if (sType == 'row') {
-            //hit test
+            // hit test
             const desc = view.PositionToObj(0, e.y).desc!;
 
             if (parseInt(desc!) >= exactIndex(view.focusedCell)[1]) {

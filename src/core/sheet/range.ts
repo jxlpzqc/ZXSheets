@@ -29,7 +29,7 @@ export class Range implements IRange {
             }
         }
 
-        //TODO: 完成对其他 sheet 引用
+        // TODO: 完成对其他 sheet 引用
 
 
         return [];
@@ -42,7 +42,7 @@ export class Range implements IRange {
 
 /**
  * 判断是不是一个表示Range的字符串
- * @param sep 
+ * @param sep
  */
 export function isRangeStr(sep: string): boolean {
     const test1 = /^\[?[\u4E00-\u9FA5A-Za-z0-9_]*\]?\!\$?[a-zA-Z]+\$?\d+(\:\$?[a-zA-Z]+\$?\d+)?$/.test(sep);

@@ -73,7 +73,7 @@ export interface PrintOption {
     page: PageSettings;
     headerAndFooter: HeaderOption;
     printScale: PrintScaleOption;
-    
+
     printArea: IRange | undefined;
     printTiles: {
         rows: IRange | undefined,
@@ -81,9 +81,9 @@ export interface PrintOption {
     } | undefined;
     cellErrorsDisplay: "displayed" | "blank" | string;
     /**
-     * 打印顺序  
-     * down 先从上到下  
-     * over 先从左到右  
+     * 打印顺序
+     * down 先从上到下
+     * over 先从左到右
      */
     pageOrderFirst: "down" | "over";
 }

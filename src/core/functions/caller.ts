@@ -4,16 +4,16 @@ import { GetFunctionContainer } from "./container";
 import { IFunction } from "./function";
 
 export function GetFunction(functionName: string, ...args: any[]): IFunction | undefined {
-    let types: string[] = [];
+    const types: string[] = [];
     for (const arg of args) {
         if (isRange(arg)) {
-            let range = arg as IRange;
-            let cells = range.getAllCells();
+            const range = arg as IRange;
+            const cells = range.getAllCells();
             if (cells.length == 0) {
                 types.push('any');
             }
             else if (cells.length == 1) {
-                let cell = cells[0];
+                const cell = cells[0];
                 if (isNumber(cell.value)) {
                     types.push('number,string,ref');
                 }

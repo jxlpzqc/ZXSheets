@@ -3,13 +3,41 @@ const path = require('path');
 
 const config = {
     mode: 'development',
-    entry: './src/view/entry/main.ts',
+    entry: './src/entry/main.ts',
+    target:'electron-renderer',
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: [/node_modules/,/\.test\.ts/]
+                exclude: [/node_modules/, /\.test\.ts/]
+            },
+            {
+                test: /\.jsx?$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react']
+                    }
+                },
+                exclude: [/node_modules/]
+            },
+            {
+                rules: [
+                    {
+                        test: /\.css$/,
+                        use: ['style-loader', {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                            }
+                        }]
+                    }
+                ]
+            },
+            {
+                test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+                loader: 'url-loader'
             }
         ]
     },
@@ -22,7 +50,7 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template:"./src/view/entry/index.html"
+            template: "./src/entry/index.html"
         })
     ]
 };

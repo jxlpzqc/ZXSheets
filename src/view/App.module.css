@@ -1,0 +1,6 @@
+.closeBtns{
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-app-region: no-drag; 
+}

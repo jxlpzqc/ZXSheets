@@ -82,7 +82,7 @@ function checkFunctionValidity(fun: IFunction): boolean {
 /**
  * 判断是否是合法函数名
  * @param name 函数名
- * @returns 
+ * @returns
  */
 function isLegalFunctionName(name: string) {
     return /^[\u4E00-\u9FA5A-Za-z_][\u4E00-\u9FA5A-Za-z0-9_]*$/.test(name);
@@ -90,8 +90,8 @@ function isLegalFunctionName(name: string) {
 
 /**
  * 根据函数重载时匹配顺序插入一个函数
- * @param set 
- * @param fun 
+ * @param set
+ * @param fun
  */
 function addFunInSet(set: IFunction[], fun: IFunction) {
     for (let index = 0; index < set.length; index++) {

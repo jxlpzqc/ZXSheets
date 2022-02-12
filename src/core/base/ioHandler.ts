@@ -5,7 +5,7 @@ export interface IFileDescriptor {
 }
 
 export interface IIOHandler {
-    
+
     open: (filename: string) => IFileDescriptor;
     read: (fd: IFileDescriptor, content: Uint8Array) => void;
     write: (fd: IFileDescriptor, content: Uint8Array) => void;

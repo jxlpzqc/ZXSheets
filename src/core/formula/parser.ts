@@ -11,7 +11,7 @@ import { getOperatorReturnType } from "./utils";
  */
 Object.defineProperty(Array.prototype, "top", {
     get() {
-        //@ts-ignore
+        // @ts-ignore
         return (this[this.length - 1]);
     }
 })
@@ -64,7 +64,7 @@ class FormulaParser {
     private sep = "";
 
     /**
-     * 当前处理状态  
+     * 当前处理状态
      * - 0 表示空闲
      * - 1 表示单词序列
      * - 2 表示数字序列
@@ -132,7 +132,7 @@ class FormulaParser {
         // if (!rType) {
         //     throw new ParseError(ParseErrorType.FunctionNotFound, -1,
         //         `function which name is ${node.functionName} and args is ${node.values.toString()} is not found.`)
-        // } 
+        // }
         // node.returnType = rType;
         this.items.push(node);
     }
@@ -204,10 +204,10 @@ class FormulaParser {
             if (this.mode == 0) {
                 this.sep = char;
                 if (isLetter) this.mode = 1;
-                //这里不可能是e，因为上面已经过滤了字母
+                // 这里不可能是e，因为上面已经过滤了字母
                 else if (isNumberOrPointOrE) this.mode = 2;
                 else if (isStrSign) {
-                    //进入字符串强制模式
+                    // 进入字符串强制模式
                     this.stack.push(char);
                     this.sep = "";
                     this.mode = 3;
@@ -231,7 +231,7 @@ class FormulaParser {
                     this.mode = 4;
                 }
                 else if (isComma) {
-                    this.sep == "";
+                    this.sep = "";
                     this.meetOperator(char);
                 }
                 else {
@@ -254,7 +254,7 @@ class FormulaParser {
                         if (!isRangeStr(this.sep))
                             throw new ParseError(ParseErrorType.SyntaxError, i, `Invalid Range String ${this.sep}.`)
                         this.items.push(new Range(this.sep));
-                        //finish and back
+                        // finish and back
                         i--;
                         this.mode = 0;
                         this.sep = "";
@@ -366,7 +366,7 @@ function isLegalFunctionName(name: string) {
 /**
  * 解析一个公式，生成表达式树
  * @param content 公式，不包含开头的等于号
- * @returns 返回一个表达式树，或一个值单元 
+ * @returns 返回一个表达式树，或一个值单元
  * @throws `ParseError` 解析错误返回异常
  */
 export function parseFormula(content: string): FormulaTreeResult {

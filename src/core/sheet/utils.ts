@@ -14,9 +14,9 @@ export enum CmpIndexResult {
 
 /**
  * 获取a在b的哪一边
- * @param a 一个索引号，例如A1 
+ * @param a 一个索引号，例如A1
  * @param b 一个索引号
- * @returns 
+ * @returns
  */
 export function cmpIndex(a: string, b: string): CmpIndexResult {
     const aResult = indexReg.exec(a);
@@ -58,7 +58,7 @@ export function isALeftTopOfB(a: string, b: string): boolean {
 }
 
 /**
- * 索引中的字母转换为数字  
+ * 索引中的字母转换为数字
  * 例如将B转换为2
  * @param letterIndex 字母索引
  */
@@ -75,7 +75,7 @@ export function indexLetterToNumber(letterIndex: string): number {
 
 
 export function indexNumberToLetter(index: number): string {
-    let chars: number[] = [];
+    const chars: number[] = [];
     while (index != 0) {
         const cl = index % 26;
         chars.push(cl);

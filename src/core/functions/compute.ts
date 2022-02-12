@@ -6,38 +6,36 @@ import { isFormulaTreeNode, isFormulaValue } from "../formula/utils";
 import { GetFunction } from "./caller";
 
 export function computeFormula(formula: FormulaTreeResult): any {
-    console.log("1");
-    
     if (isFormulaValue(formula) || formula instanceof Array) return formula;
     else if (isRange(formula)) return formula;
     else if (isFormulaTreeNode(formula)) {
-        let f = formula as FormulaTreeNode;
+        const f = formula as FormulaTreeNode;
         // 递归调用
-        let values = f.values.map(u => computeFormula(u));
-        let fun = GetFunction(f.functionName, ...values);
+        const values = f.values.map(u => computeFormula(u));
+        const fun = GetFunction(f.functionName, ...values);
         if (!fun) throw new Error("Function not found!");
         // 对参数进行处理
-        let args = [];
+        const args = [];
         for (let i = fun.argsType.length - 1; i >= 0; i--) {
             if (fun.argsType[i] == 'varargs') {
                 let j = values.length;
                 while (j >= fun.argsType.length) {
-                    args.push(values[j]);
+                    args.push(values[j - 1]);
                     j--;
                 }
             }
             else if (fun.argsType[i] != 'ref' && isRange(values[i])) {
-                let r = values[i] as IRange;
-                let cells = r.getAllCells();
+                const r = values[i] as IRange;
+                const cells = r.getAllCells();
                 if (fun.argsType[i] == 'array_n') {
-                    let arg = [];
+                    const arg = [];
                     for (const cell of cells) {
                         if (isNumber(cell.value)) arg.push(cell.value);
                     }
                     args.push(arg);
                 }
                 else if (fun.argsType[i] == 'array_s') {
-                    let arg = [];
+                    const arg = [];
                     for (const cell of cells) {
                         if (isNumber(cell.value)) arg.push((cell.value as Real).toString());
                         else if (typeof (cell.value) == 'string') arg.push(cell.value);
@@ -46,7 +44,7 @@ export function computeFormula(formula: FormulaTreeResult): any {
                 }
                 else if (fun.argsType[i] == 'bool') {
                     if (cells.length > 0) {
-                        let firstCell = cells[0];
+                        const firstCell = cells[0];
                         if (isNumber(firstCell.value) || typeof (firstCell.value) == 'boolean') {
                             args.push(!!firstCell.value);
                         } else {
@@ -56,7 +54,7 @@ export function computeFormula(formula: FormulaTreeResult): any {
                 }
                 else if (fun.argsType[i] == 'number') {
                     if (cells.length > 0) {
-                        let firstCell = cells[0];
+                        const firstCell = cells[0];
                         if (isNumber(firstCell.value)) {
                             args.push(firstCell.value);
                         } else {
@@ -66,9 +64,9 @@ export function computeFormula(formula: FormulaTreeResult): any {
                 }
                 else if (fun.argsType[i] == 'text') {
                     if (cells.length > 0) {
-                        let firstCell = cells[0];
+                        const firstCell = cells[0];
                         if (isNumber(firstCell.value)) {
-                            args.push((<Real>(firstCell.value)).toString());
+                            args.push(((firstCell.value) as Real).toString());
                         } else {
                             args.push('');
                         }

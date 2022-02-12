@@ -13,7 +13,7 @@ export class Cell implements ICell {
     type: CellType = CellType.NormalCell;
     private _content: string = "";
     set content(value: string) {
-        let oldValue = this._content;
+        const oldValue = this._content;
         this._content = value;
         this.updateValue(oldValue);
     }
@@ -39,9 +39,9 @@ export class Cell implements ICell {
         else if (this._content.startsWith('\'')) {
             this._value = this._content.substring(1, this._content.length - 1);
         }
-        else if (this._content.startsWith('=')) 
+        else if (this._content.startsWith('='))
         {
-            let formula = this._content.substring(1, this._content.length);
+            const formula = this._content.substring(1, this._content.length);
             if (this.formulaInfo.formula != formula) {
                 try {
                     this.formulaInfo.result = parseFormula(formula);

@@ -38,7 +38,7 @@ export class Sheet implements ISheet {
     getRangeStyles(): RangeDef[] {
         throw new Error("Method not implemented.");
     }
-    //TODO 改成使用红黑树实现
+    // TODO 改成使用红黑树实现
     private cells: ICell[] = [];
 
     editCell(index: string, content: string): void {
@@ -51,14 +51,14 @@ export class Sheet implements ISheet {
     }
 
     deleteCell(index: string): void {
-        let c = this.cells.findIndex(u => u.id == index);
+        const c = this.cells.findIndex(u => u.id == index);
         if (c != -1) this.cells.splice(c, 1);
     }
     getCellsInRect(a: string, b: string): ICell[] {
         const ai = exactIndex(a);
         const bi = exactIndex(b);
         const ret: ICell[] = [];
-        
+
         for (const cell of this.cells) {
             const celli = exactIndex(cell.id);
             if (celli[0] >= ai[0] && celli[0] <= bi[0] && celli[1] >= ai[1] && celli[1] <= bi[1]) {

@@ -1,9 +1,17 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "radix": false,
+    "triple-equals": false,
+    "no-conditional-assignment": false
+  },
+  "indent": [
+    "error",
+    2
+  ],
+  "rulesDirectory": []
 }

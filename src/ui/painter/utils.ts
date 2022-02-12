@@ -7,14 +7,14 @@
 export function createHiDPICanvas(w: number, h: number, ratio?: number) {
 
     const PIXEL_RATIO = (function () {
-        const c = <HTMLCanvasElement>document.createElement("canvas"),
+        const c = document.createElement("canvas") as HTMLCanvasElement,
             ctx = c.getContext("2d") as any,
             dpr = window.devicePixelRatio || 1,
-            bsr = ctx['webkitBackingStorePixelRatio'] ||
-                ctx['mozBackingStorePixelRatio'] ||
-                ctx['msBackingStorePixelRatio'] ||
-                ctx['oBackingStorePixelRatio'] ||
-                ctx['backingStorePixelRatio'] || 1;
+            bsr = ctx.webkitBackingStorePixelRatio ||
+                ctx.mozBackingStorePixelRatio ||
+                ctx.msBackingStorePixelRatio ||
+                ctx.oBackingStorePixelRatio ||
+                ctx.backingStorePixelRatio || 1;
 
         return dpr / bsr;
     })();
