@@ -1,20 +1,18 @@
 import { ICell } from "../../../core/base/cell";
 
-export type TViewState = {
-  activeRibbionTab: string;
-  enabled: boolean;
-  selectedSheetID?: number;
-  selection?: {
-    start: string;
-    end: string;
-  },
-  focusedCellID?: string;
-  focusedCell?: ICell;
-};
 
-const state: TViewState = {
+const state = {
   activeRibbionTab: "home",
-  enabled: true
+  enabled: true,
+  selection: {
+    start: 'A1',
+    end: 'A1'
+  },
+  focusedCellID: 'A1',
+  focusedCellContent:''
 }
+
+
+export type TViewState = typeof state
 
 export default state;

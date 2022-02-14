@@ -32,11 +32,10 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.3"
   },
-  "main": "./main.js",
   "scripts": {
     "build": "tsc",
     "serve": "webpack-dev-server",
-    "start": "electron ./src/entry/electron.js",
+    "start": "electron ./main.js",
     "lint": "tslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "tslint --fix \"src/**/*.{ts,tsx}\"",
     "test": "jest",

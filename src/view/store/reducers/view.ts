@@ -28,6 +28,27 @@ const reducer: Reducer<TViewState> = (state = viewState, action) => {
         ...state,
         selectedSheetID: payload
       }
+    case ActionTypes.view.changeFocusedCellID:
+      return {
+        ...state,
+        focusedCellID: payload
+      }
+    case ActionTypes.view.changeFocusedCell:
+      return {
+        ...state,
+        focusedCell: payload
+      }
+    case ActionTypes.view.changeFocusedCellContent:
+      return {
+        ...state,
+        focusedCellContent: payload
+      }
+
+    case '__view':
+      return {
+        ...state,
+        ...payload
+      }
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import { Stack } from '@fluentui/react';
 import * as React from 'react';
-import { getFormularBar } from '../components/FormulaBar';
+import FormulaBar from '../components/FormulaBar';
+
 import Ribbon from '../components/ribbon/Ribbon';
 import StatusBar from '../components/StatusBar';
 import { LayoutContainer } from './LayoutContainer';
@@ -20,7 +21,7 @@ const DefaultView: React.FunctionComponent<IDefaultViewProps> = (props) => {
       <div>
         <Ribbon />
       </div>
-      {getFormularBar()}
+      <FormulaBar initialNameBoxWidth={60}></FormulaBar>
       <Stack.Item grow>
 
         {props.children}

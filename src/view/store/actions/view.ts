@@ -7,12 +7,14 @@ const ActionType = {
   changeEnabled: 'changeEnabled',
   changeSelectedSheetID: 'changeSelectedSheetID',
   changeSelection: 'changeSelection',
-  changeFocusedCell: 'changeFocusedCell'
+  changeFocusedCellID: 'changeFocusedCellID',
+  changeFocusedCell: 'changeFocusedCell',
+  changeFocusedCellContent: 'changeFocusedCellContent'
 }
 
 export const ViewActionType = ActionType;
 
-const actions: ActionMap = {
+const actions = {
   changeActiveRibbonTab: (value: string) => ({
     type: ActionType.changeActiveRibbonTab,
     payload: value
@@ -29,12 +31,15 @@ const actions: ActionMap = {
     type: ActionType.changeSelection,
     payload: value
   }),
-  changeFocusedCell: (value: ICell) => ({
-    type: ActionType.changeFocusedCell,
+  changeFocusedCellID: (value: string) => ({
+    type: ActionType.changeFocusedCellID,
     payload: value
   }),
+  changeFocusedCellContent: (value: string) => ({
+    type: ActionType.changeFocusedCellContent,
+    payload: value
+  })
 };
-
 
 export default actions;
 

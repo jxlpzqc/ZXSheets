@@ -9,6 +9,8 @@ import { Sheet } from '../core/sheet/sheet';
 import { Context } from '../core/global/context';
 import { SheetView } from '../ui/painter/view';
 import { isRunInElectron } from './utils';
+import { Provider } from 'react-redux';
+import store from './store'
 
 // #217346
 const myTheme = createTheme({
@@ -51,11 +53,11 @@ export default class App extends React.Component<{}, {}> {
   componentDidMount() {
     const sheet = new Sheet();
     Context.sheet = sheet;
-    sheet.editCell("A1", "1");
-    sheet.editCell("A2", "1");
-    sheet.editCell("B2", "4");
-    sheet.editCell("A3", "总和");
-    sheet.editCell("B3", "=sum(A1:B2)");
+    // sheet.editCell("A1", "1");
+    // sheet.editCell("A2", "1");
+    // sheet.editCell("B2", "4");
+    // sheet.editCell("A3", "总和");
+    // sheet.editCell("B3", "=sum(A1:B2)");
 
     const painter = new SheetView('sheet', sheet);
     painter.draw();
@@ -66,18 +68,21 @@ export default class App extends React.Component<{}, {}> {
       height: '100%'
     };
     return (
-      <div style={containerStyle}>
-        <DefaultView>
-          <div id="sheet" style={{
-            height: '100%',
-            width: '100%'
-          }}></div>
-        </DefaultView>
-        {isRunInElectron() &&
-          <div className={classnames.closeBtns}>
-            <WindowButtons></WindowButtons>
-          </div>}
-      </div>
+      <Provider store={store}>
+        <div style={containerStyle}>
+          <DefaultView>
+            <div id="sheet" style={{
+              height: '100%',
+              width: '100%'
+            }}></div>
+          </DefaultView>
+          {/* Show window buttons only in electron mode. */}
+          {isRunInElectron() &&
+            <div className={classnames.closeBtns}>
+              <WindowButtons></WindowButtons>
+            </div>}
+        </div>
+      </Provider>
     );
   }
 }

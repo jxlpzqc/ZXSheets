@@ -16,7 +16,7 @@ export interface ICell {
     /**
      * 用户输入的值
      */
-    content: any;
+    content: string;
     /**
      * 计算出来的值
      */
