@@ -9,6 +9,7 @@ import { Sheet } from '../core/sheet/sheet';
 import { Context } from '../core/global/context';
 import { SheetView } from '../ui/painter/view';
 import { isRunInElectron } from './utils';
+import Dialog from './dialogs/dialog';
 
 // #217346
 const myTheme = createTheme({
@@ -73,6 +74,11 @@ export default class App extends React.Component<{}, {}> {
             width: '100%'
           }}></div>
         </DefaultView>
+        
+        <Dialog id='primDiag' show={true}>
+          <h1>Say Hello</h1>
+        </Dialog>
+
         {isRunInElectron() &&
           <div className={classnames.closeBtns}>
             <WindowButtons></WindowButtons>

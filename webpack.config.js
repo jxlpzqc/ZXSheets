@@ -3,8 +3,11 @@ const path = require('path');
 
 const config = {
     mode: 'development',
-    entry: './src/entry/main.ts',
-    target:'electron-renderer',
+    entry: {
+        main: './src/entry/main.ts',
+        dialog: './src/entry/dialog.tsx'
+    },
+    target: 'electron-renderer',
     module: {
         rules: [
             {
@@ -46,11 +49,18 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'zxsheet.js'
+        filename: '[name].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/entry/index.html"
+            filename: 'index.html',
+            template: "./src/entry/index.html",
+            chunks: ['manifest', 'vendor', 'main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'dialog.html',
+            template: "./src/entry/dialog.html",
+            chunks: ['manifest', 'vendor', 'dialog']
         })
     ]
 };
