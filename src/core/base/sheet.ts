@@ -6,6 +6,7 @@ import { Style } from "./defs/style";
 import { RangeDef } from "./defs/rangedef";
 
 export interface ISheet {
+    sheetID: string;
     getCell(index: string): ICell | undefined;
     editCell(index: string, content: string): void;
     deleteCell(index: string): void;

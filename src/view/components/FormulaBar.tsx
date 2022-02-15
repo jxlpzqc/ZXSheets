@@ -2,6 +2,7 @@ import {
   CommandBar,
   CommandButton,
   getTheme,
+  IButtonStyles,
   IconButton,
   IStyleFunctionOrObject,
   ITextFieldStyleProps,
@@ -42,12 +43,23 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
 
     const theme = getTheme();
 
+    const cmdButtonsStyles: IButtonStyles = {
+      root: {
+        height: '30px'
+      },
+      rootDisabled: {
+        background: 'transparent',
+      },
+
+    };
+
+
     return (
       <Stack styles={{
         root: {
           background: theme.palette.neutralLight
         }
-      }} horizontal>
+      }} horizontal >
         <TextField
           styles={{
             root: {
@@ -61,7 +73,8 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
           root: {
             margin: '10px 0px',
             background: theme.palette.white,
-            border: `${theme.palette.neutralSecondary} solid 0.5px`,
+            border: `${theme.palette.neutralSecondary} solid 1px`,
+            borderRight: '0',
             height: '32px'
           }
         }} horizontal>
@@ -69,27 +82,20 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
             iconProps={{
               iconName: 'Cancel'
             }}
-            styles={{
-              rootDisabled: {
-                background: 'transparent'
-              }
-            }}
+            styles={cmdButtonsStyles}
             disabled={!this.state.showButtons} />
           <IconButton
             iconProps={{
               iconName: 'CheckMark'
             }}
-            styles={{
-              rootDisabled: {
-                background: 'transparent'
-              }
-            }}
+            styles={cmdButtonsStyles}
             disabled={!this.state.showButtons} />
           <IconButton
             iconProps={{
               // Replace to 'fx' icon
               iconName: 'Code'
-            }} />
+            }}
+            styles={cmdButtonsStyles} />
         </Stack>
 
         <Stack.Item grow>
@@ -104,7 +110,7 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
             onChange={(e, v) => { if (v !== undefined) this.props.onCellContentChange(v) }}
             value={this.props.cellContent}></TextField>
         </Stack.Item>
-      </Stack>
+      </Stack >
     );
   }
 }

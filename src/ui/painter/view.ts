@@ -125,7 +125,7 @@ export class SheetView {
     }
 
     public set selection(value: string[]) {
-        // TODO 支持多选区
+        // TODO: 支持多选区
         if (isALeftTopOfB(value[0], value[1])) {
             this._selection =
                 exactIndex(value[0])
@@ -154,12 +154,21 @@ export class SheetView {
         this.drawSelection();
     }
 
-    constructor(private elementId: string, sheet: ISheet) {
+    public onFoucusedChange?: (value: string) => void;
+    public onSelectionChange?: (value: string[]) => void;
+
+    constructor(element: string | HTMLElement, sheet: ISheet) {
         this._sheet = sheet;
 
-        const ele = document.getElementById(elementId);
+        let ele: HTMLElement | null;
+
+        if (typeof (element) == 'string')
+            ele = document.getElementById(element);
+        else
+            ele = element;
+
         if (!!ele) this.block = ele;
-        else throw new Error("Could not find such a element which id is " + elementId);
+        else throw new Error("Could not find such a element.");
 
         // add event listener
         const resizeObserver = new ResizeObserver(entries => {
@@ -169,17 +178,6 @@ export class SheetView {
         resizeObserver.observe(ele);
 
         const s = this.getScaleFunction();
-
-        // ele.addEventListener('click', (e) => {
-        //     const obj = this.PositionToObj(s(e.offsetX), s(e.offsetY));
-        //     console.log(obj);
-        //     HandleClick({
-        //         view: this,
-        //         item: obj,
-        //         x: s(e.offsetX),
-        //         y: s(e.offsetY)
-        //     });
-        // })
 
         ele.addEventListener('mousedown', (e) => {
             const obj = this.PositionToObj(s(e.offsetX), s(e.offsetY));
@@ -465,9 +463,6 @@ export class SheetView {
                 currentR++;
             }
             this.rowYs.push(currentY);
-
-
-
         }
 
     }

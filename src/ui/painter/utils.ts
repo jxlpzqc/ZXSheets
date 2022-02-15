@@ -6,7 +6,7 @@
  */
 export function createHiDPICanvas(w: number, h: number, ratio?: number) {
 
-    const PIXEL_RATIO = (function () {
+    const PIXEL_RATIO = (() => {
         const c = document.createElement("canvas") as HTMLCanvasElement,
             ctx = c.getContext("2d") as any,
             dpr = window.devicePixelRatio || 1,

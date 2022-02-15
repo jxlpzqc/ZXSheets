@@ -10,6 +10,9 @@ import { Defaults } from "../global/defaults";
 import { exactIndex, indexLetterToNumber } from "./utils";
 
 export class Sheet implements ISheet {
+
+    constructor(public sheetID: string) { }
+
     getColumnWidth(index: number): number {
         for (const c of this.columns) {
             if (c.selection.start <= index && c.selection.end >= index) {
@@ -38,7 +41,7 @@ export class Sheet implements ISheet {
     getRangeStyles(): RangeDef[] {
         throw new Error("Method not implemented.");
     }
-    // TODO 改成使用红黑树实现
+    // TODO: 改成使用红黑树实现
     private cells: ICell[] = [];
 
     editCell(index: string, content: string): void {
