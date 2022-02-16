@@ -23,7 +23,9 @@ const DefaultView: React.FunctionComponent<IDefaultViewProps> = (props) => {
       </div>
       <FormulaBar initialNameBoxWidth={60}></FormulaBar>
       <Stack.Item grow>
-        <div>
+        <div style={{
+          height: '100%', width: '100%'
+        }}>
           {props.children}
         </div>
       </Stack.Item>

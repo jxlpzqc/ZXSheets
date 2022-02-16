@@ -11,6 +11,7 @@ import { SheetView } from '../ui/painter/view';
 import { isRunInElectron } from './utils';
 import { Provider } from 'react-redux';
 import store from './store'
+import WorkingArea  from './components/WorkingArea';
 
 // #217346
 const myTheme = createTheme({
@@ -59,7 +60,7 @@ export default class App extends React.Component<{}, {}> {
       <Provider store={store}>
         <div style={containerStyle}>
           <DefaultView>
-                      
+            <WorkingArea></WorkingArea>
           </DefaultView>
           {/* Show window buttons only in electron mode. */}
           {isRunInElectron() &&

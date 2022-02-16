@@ -23,19 +23,15 @@ const config = {
         exclude: [/node_modules/]
       },
       {
-        rules: [
-          {
-            test: /\.css$/,
-            use: ['style-loader', {
-              loader: 'css-loader',
-              options: {
-                modules: {
-                  localIdentName: '[path][name]-[local]-[hash:base64]'
-                },
-              }
-            }]
+        test: /\.css$/,
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[path][name]-[local]-[hash:base64]'
+            },
           }
-        ]
+        }]
       },
       {
         test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
@@ -44,7 +40,10 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    }
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

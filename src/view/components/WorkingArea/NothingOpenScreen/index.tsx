@@ -1,12 +1,11 @@
 import { Stack } from '@fluentui/react'
 import React from 'react'
+import classnames from './index.module.css'
 
 export default function NothingOpenScreen() {
   return (
-    <Stack>
-      <Stack.Item grow><div></div></Stack.Item>
+    <div className={classnames.container}>
       <div>当前没有打开任何工作簿。</div>
-      <Stack.Item grow><div></div></Stack.Item>
-    </Stack>
+    </div>
   )
 }

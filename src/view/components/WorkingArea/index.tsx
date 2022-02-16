@@ -4,51 +4,63 @@ import { RootState } from '@/view/store/state'
 import { AnyAction } from 'redux'
 import { ISheet } from '@/core/base/sheet'
 import { IBook } from '@/core/base/book'
-import classnames from 'index.module.css'
+import classnames from './index.module.css'
 import SheetUIWrapper from './SheetUIWrapper'
 import NothingOpenScreen from './NothingOpenScreen'
 import { ScrollBar } from './ScrollBar'
 import { Stack } from '@fluentui/react'
+import Actions from '@/view/store/actions'
 
 type IWorkingAreaProps = {
-  currentBook: IBook;
-  currentSheet: ISheet;
+  currentBook?: IBook;
+  currentSheet?: ISheet;
   onCurrentSheetChange(sheet: ISheet): void;
 }
 
 
-export const WorkingArea: React.FC<IWorkingAreaProps> = (props) => {
-  return (
-    <>
+const WorkingArea: React.FC<IWorkingAreaProps> = (props) => {
+
+  if (props.currentSheet) {
+    return (
       <div className={classnames.gridContainer}>
-        {props.currentSheet ?
-          (<SheetUIWrapper sheet={props.currentSheet}></SheetUIWrapper>) :
-          (<NothingOpenScreen></NothingOpenScreen>)
-        }
-      </div>
-      <ScrollBar
-        orientation='vertical'
-        current={0}
-        currentPageSize={10}
-        total={100}
-      ></ScrollBar>
-      <Stack horizontal>
-        {/* TODO: Sheet tabs. */}
-        <div></div>
-        
+        <SheetUIWrapper sheet={props.currentSheet}></SheetUIWrapper>
         <ScrollBar
-          orientation='horizental'
+          orientation='vertical'
           current={0}
           currentPageSize={10}
           total={100}
         ></ScrollBar>
-      </Stack>
-    </>
-  )
+        <Stack horizontal>
+          {/* TODO: Sheet tabs. */}
+          <div></div>
+          <ScrollBar
+            orientation='horizental'
+            current={0}
+            currentPageSize={10}
+            total={100}
+          ></ScrollBar>
+        </Stack>
+      </div >
+    );
+  }
+  else {
+    return (<NothingOpenScreen></NothingOpenScreen>);
+  }
+
 };
 
-const mapStateToProps = (state: RootState) => ({});
+const mapStateToProps = (state: RootState) => ({
+  currentBook: state.file.currentBook,
+  currentSheet: state.file.currentSheet
+});
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({});
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+  const { file: FileActions } = Actions;
+  return {
+    onCurrentSheetChange(sheet: ISheet) {
+      dispatch(FileActions.changeCurrentSheet(sheet))
+    }
+  }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkingArea)
