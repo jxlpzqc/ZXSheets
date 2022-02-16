@@ -297,7 +297,10 @@ export class SheetView {
         this.drawHeadingsAndLines();
         this.drawCells();
         this.drawSelection();
+    }
 
+    public drawSelectionLayer() {
+        this.drawSelection();
     }
 
     private fillPointPos: number[] = [-100, -100];

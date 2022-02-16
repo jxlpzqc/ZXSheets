@@ -1,5 +1,6 @@
-import { Stack } from '@fluentui/react';
+import { getTheme, Stack } from '@fluentui/react';
 import React from 'react'
+import Thumb from './Thumb';
 
 type ITrackProps = {
   orientation: 'horizental' | 'vertical';
@@ -22,13 +23,25 @@ type ITrackProps = {
   onPageDown(): void;
 };
 
+
 export default function Track(props: ITrackProps) {
 
+  const { palette } = getTheme();
+
+  const trackStyle: React.CSSProperties = {
+    background: palette.neutralLighter
+  }
+
+
+
   return (
-    <Stack horizontal={props.orientation === 'horizental'}>
-      <div></div>
-      <div></div>
-      <div></div>
-    </Stack>
+    <div style={trackStyle}>
+      <Stack horizontal={props.orientation === 'horizental'}>
+        <div onClick={props.onPageUp}></div>
+        <Thumb orientation={props.orientation} length={props.length}></Thumb>
+        <div onClick={props.onPageDown}></div>
+      </Stack>
+
+    </div>
   )
 }

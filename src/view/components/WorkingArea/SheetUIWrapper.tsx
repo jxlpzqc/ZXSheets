@@ -3,6 +3,10 @@ import { ICell } from '@/core/base/cell';
 import { ISheet } from '@/core/base/sheet';
 import SheetUI from '@/ui';
 import { Context } from '@/core/global/context'
+import { connect } from 'react-redux';
+import { RootState } from '@/view/store/state';
+import { AnyAction, Dispatch } from 'redux';
+import Actions from '@/view/store/actions';
 
 export interface ISheetUIWrapperProps {
   /**
@@ -10,16 +14,20 @@ export interface ISheetUIWrapperProps {
    */
   sheet: string | ISheet;
   focusedCellID: string;
-  focusedCellContent?: string;
+  // Useless
+  // focusedCellContent?: string;
   selection: string[];
   onFocusedCellIDChange(newID: string): void;
   onSelectionChange(selection: string[]): void;
-
+  onFocusedCellContentChange(newContent: string): void;
+  leftTopCellID: string;
+  shouldUpdate: boolean;
+  onUpdateFinish(): void;
 }
 
 export interface ISheetUIWrapperState { }
 
-export default class SheetUIWrapper extends React.Component<ISheetUIWrapperProps, ISheetUIWrapperState> {
+class SheetUIWrapper extends React.Component<ISheetUIWrapperProps, ISheetUIWrapperState> {
 
   private sheetRef;
   private sheetUI?: SheetUI;
@@ -68,8 +76,22 @@ export default class SheetUIWrapper extends React.Component<ISheetUIWrapperProps
     }
   }
 
-  componentDidUpdate() {
-    this.sheetUI?.draw();
+
+  componentDidUpdate(preProps: ISheetUIWrapperProps) {
+    if (this.props.leftTopCellID !== preProps.leftTopCellID || this.props.shouldUpdate) {
+
+      this.sheetUI!.startCellIndex = this.props.leftTopCellID;
+      // draw and call finish update event
+      this.sheetUI?.draw();
+      this.props.onUpdateFinish();
+    }
+    else if (this.props.selection !== preProps.selection || this.props.focusedCellID !== preProps.focusedCellID) {
+      this.sheetUI?.drawSelectionLayer();
+    }
+    else {
+      // TODO: convert to logger
+      console.log("Component updated, but there is no need to update canvas.");
+    }
   }
 
   componentWillUnmount() {
@@ -86,3 +108,28 @@ export default class SheetUIWrapper extends React.Component<ISheetUIWrapperProps
     );
   }
 }
+
+const mapStateToProps = (state: RootState) => ({
+  focusedCellID: state.view.focusedCellID,
+  selection: state.view.selection,
+  leftTopCellID: state.view.leftTopCellID,
+  shouldUpdate: state.view.shouldUpdate
+
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
+  onFocusedCellIDChange(newID: string): void {
+    dispatch(Actions.view.changeFocusedCellID(newID));
+  },
+  onSelectionChange(selection: string[]): void {
+    dispatch(Actions.view.changeSelection(selection));
+  },
+  onFocusedCellContentChange(newContent: string): void {
+    dispatch(Actions.view.changeFocusedCellContent(newContent));
+  },
+  onUpdateFinish() {
+    dispatch(Actions.view.finishUpdate());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SheetUIWrapper);

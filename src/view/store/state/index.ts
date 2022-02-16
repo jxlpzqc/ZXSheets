@@ -1,7 +1,9 @@
 import view from './view'
+import file from './file'
 
 const rootState = {
-  view
+  view,
+  file
 };
 
 export type RootState = typeof rootState;

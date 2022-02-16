@@ -4,12 +4,11 @@ import { ICell } from "../../../core/base/cell";
 const state = {
   activeRibbionTab: "home",
   enabled: true,
-  selection: {
-    start: 'A1',
-    end: 'A1'
-  },
+  selection: ['A1', 'A1'],
   focusedCellID: 'A1',
-  focusedCellContent:''
+  focusedCellContent: '',
+  leftTopCellID: 'A1',
+  shouldUpdate: true
 }
 
 

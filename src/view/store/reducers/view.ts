@@ -1,7 +1,5 @@
 import { Reducer } from "redux";
-import { AnyAction } from "redux";
 import { ActionTypes } from "../actions";
-import { RootState } from "../state";
 import { TViewState } from "../state/view";
 import viewState from '../state/view'
 
@@ -42,6 +40,16 @@ const reducer: Reducer<TViewState> = (state = viewState, action) => {
       return {
         ...state,
         focusedCellContent: payload
+      }
+    case ActionTypes.view.startUpdate:
+      return {
+        ...state,
+        shouldUpdate:true
+      }
+    case ActionTypes.view.finishUpdate:
+      return {
+        ...state,
+        shouldUpdate:false
       }
 
     case '__view':

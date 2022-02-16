@@ -1,4 +1,5 @@
 import { AnyAction } from "redux";
+import file, { FileActionType } from "./file";
 import view, { ViewActionType } from "./view";
 
 export interface ActionMap {
@@ -6,11 +7,13 @@ export interface ActionMap {
 }
 
 const actionsCreator = {
-  view
+  view,
+  file
 }
 
 export const ActionTypes = {
-  view: ViewActionType
+  view: ViewActionType,
+  file: FileActionType
 }
 
 export default actionsCreator;

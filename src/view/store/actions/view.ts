@@ -9,7 +9,9 @@ const ActionType = {
   changeSelection: 'changeSelection',
   changeFocusedCellID: 'changeFocusedCellID',
   changeFocusedCell: 'changeFocusedCell',
-  changeFocusedCellContent: 'changeFocusedCellContent'
+  changeFocusedCellContent: 'changeFocusedCellContent',
+  startUpdate: 'view/startUpdate',
+  finishUpdate: 'view/finishUpdate'
 }
 
 export const ViewActionType = ActionType;
@@ -27,7 +29,7 @@ const actions = {
     type: ActionType.changeSelectedSheetID,
     payload: value
   }),
-  changeSelection: (value: { start: string, end: string }) => ({
+  changeSelection: (value: string[]) => ({
     type: ActionType.changeSelection,
     payload: value
   }),
@@ -38,7 +40,14 @@ const actions = {
   changeFocusedCellContent: (value: string) => ({
     type: ActionType.changeFocusedCellContent,
     payload: value
-  })
+  }),
+  startUpdate: () => ({
+    type: ActionType.startUpdate
+  }),
+  finishUpdate: () => ({
+    type: ActionType.finishUpdate
+  }),
+
 };
 
 export default actions;
