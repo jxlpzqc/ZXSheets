@@ -1,13 +1,42 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from './RibbonPalette'
 
-export default class RibbonTabPage extends Component {
-  render () {
+export interface IRibbonTabPageProps {
+  /**
+   * text in tab label
+   */
+  text: string,
+  /**
+   * when false - events inactive
+   */
+  enable: boolean,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+
+
+}
+
+export default class RibbonTabPage extends Component<IRibbonTabPageProps> {
+
+  static defaultProps: IRibbonTabPageProps;
+
+  render() {
     // transmit palette to children
     const palette = this.props.palette
     const children = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
+      (child: any) => React.cloneElement(child, child.props.hasOwnProperty('palette') ? { palette } : undefined)
     )
 
     const isEnable = this.props.enable
@@ -31,22 +60,6 @@ export default class RibbonTabPage extends Component {
   }
 }
 
-RibbonTabPage.propTypes = {
-  // text in tab label
-  text: PropTypes.string,
-  // when false - events inactive
-  enable: PropTypes.bool,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
-}
 
 RibbonTabPage.defaultProps = {
   text: '',

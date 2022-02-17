@@ -1,8 +1,49 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { RibbonPalette } from './RibbonPalette'
 
-export default function ComboBox(props) {
+export interface IComboBoxProps {
+  index?: number;
+  /**
+   * text in combo box
+   */
+  text: string | number,
+  /**
+   * text near combo box
+   */
+  label: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * when true - dropdown list is open
+   */
+  active: boolean,
+  /**
+   * array of data shown in dropdown
+   */
+  data: (string | number)[],
+  /**
+   * width of component
+   */
+  width: number,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+  onSelectionIndexChanged?: (index: number, item: string | number) => void;
+}
+
+export default function ComboBox(props: IComboBoxProps) {
   // shouldComponentUpdate (nextProps) {
   //   let prevString = JSON.stringify(this.props)
   //   let nextString = JSON.stringify(nextProps)
@@ -15,10 +56,10 @@ export default function ComboBox(props) {
   const text = props.text
   const label = props.label
   const data = props.data
-  const index = props.index
+  const index = props.index ?? -1;
   const width = props.width + 'px'
 
-  let events = isEnable ? props.events : {}
+  const events = isEnable ? props.events : {}
 
   if (!isVisible) {
     return null
@@ -49,8 +90,10 @@ export default function ComboBox(props) {
           e.stopPropagation()
           setIsActive(false)
         }}>
-          {data.map((item, index) => {
-            return <div className={styles.item} key={index} onClick={() => { props.onSelectionIndexChanged && props.onSelectionIndexChanged(index, item) }}>
+          {data.map((item, key) => {
+            return <div className={styles.item} key={key} onClick={
+              () => { if (props.onSelectionIndexChanged) props.onSelectionIndexChanged(key, item) }
+            }>
               {item}
             </div>
           })}
@@ -58,34 +101,6 @@ export default function ComboBox(props) {
       </div>
     </div>
   )
-}
-
-ComboBox.propTypes = {
-  // text in combo box
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  // text near combo box
-  label: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // when true - dropdown list is open
-  active: PropTypes.bool,
-  // array of data shown in dropdown
-  data: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])),
-  // width of component
-  width: PropTypes.number,
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
 }
 
 ComboBox.defaultProps = {

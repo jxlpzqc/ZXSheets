@@ -1,6 +1,6 @@
 import { getTheme } from '@fluentui/react';
 import React from 'react';
-import { MainRibbon, RibbonTabPage } from '../../libs/ribbon';
+import { MainRibbon, RibbonPalette, RibbonTabPage } from '../../libs/ribbon';
 
 export interface IRibbonProps {
 }
@@ -18,7 +18,7 @@ export default class Ribbon extends React.Component<IRibbonProps, IRibbonState> 
 
   public render() {
     const theme = getTheme();
-    const ribbonPalette = {
+    const ribbonPalette: RibbonPalette = {
       main: theme.palette.themePrimary,
       inActiveTab: theme.palette.white,
       activeBackStageButton: theme.palette.themeDark,

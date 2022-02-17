@@ -1,12 +1,21 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from './RibbonPalette'
 
-export default class RibbonRow extends Component {
-  render () {
+export interface IRibbonRowProps {
+
+  /**
+   * object with color schema
+   */
+  palette?: RibbonPalette,
+}
+
+export default class RibbonRow extends Component<IRibbonRowProps> {
+  render() {
     const palette = this.props.palette
     const children = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
+      (child:any) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? { palette } : undefined)
     )
 
     return (
@@ -23,15 +32,4 @@ export default class RibbonRow extends Component {
   }
 }
 
-RibbonRow.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  // object with color schema
-  palette: PropTypes.object,
-}
 
-RibbonRow.defaultProps = {
-  palette: {},
-}

@@ -1,19 +1,32 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { RibbonPalette } from './RibbonPalette';
 
-export default class DropDown extends Component {
-  shouldComponentUpdate (nextProps) {
-    let prevString = JSON.stringify(this.props)
-    let nextString = JSON.stringify(nextProps)
+interface IDropDownProps{
+  text: string,
+  width: number,
+  visible: boolean,
+  enabled: boolean,
+  image: string,
+  active: boolean,
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  palette: RibbonPalette,
+}
+
+export default class DropDown extends Component<IDropDownProps> {
+  static defaultProps: IDropDownProps;
+  shouldComponentUpdate(nextProps: IDropDownProps) {
+    const prevString = JSON.stringify(this.props)
+    const nextString = JSON.stringify(nextProps)
     return prevString !== nextString
   }
   
-  render () {
+  render() {
+    // @ts-ignore
     window.ribbonitem += 1
     const palette = this.props.palette
     const children = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
+      (child:any) => React.cloneElement(child, child.props.hasOwnProperty('palette') ? {palette} : undefined)
     )
 
     const isVisible = this.props.visible
@@ -22,7 +35,7 @@ export default class DropDown extends Component {
     const width = this.props.width
     const text = this.props.text
 
-    let events = isEnable ? this.props.events : {}
+    const events = isEnable ? this.props.events : {}
 
     if (!isVisible) {
       return null
@@ -40,21 +53,6 @@ export default class DropDown extends Component {
       </div>
     )
   }
-}
-
-DropDown.propTypes = {
-  text: PropTypes.string,
-  width: PropTypes.number,
-  visible: PropTypes.bool,
-  enabled: PropTypes.bool,
-  image: PropTypes.string,
-  active: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  events: PropTypes.object,
-  palette: PropTypes.object,
 }
 
 DropDown.defaultProps = {
