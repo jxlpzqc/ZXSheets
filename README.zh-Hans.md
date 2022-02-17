@@ -75,5 +75,5 @@ npm run build
 - Pull Request 合并到dev分支
 
 ## 当前开发进度
-- [ ] 
-- [X] 
+
+ToDo列表请参见 [英文版](./README.md#current-progress)

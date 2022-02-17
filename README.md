@@ -105,5 +105,53 @@ There is no need to consider about code style and no code review. I schedule to 
 
 ## Current Progress
 
-- [ ]
-- [x]
+### Core Layer
+
+- [x] Finish interface defs.
+- [x] Formula parse.
+- [x] Formula caculation.
+- [x] Spreadsheet function invoking. (from spreadsheet to TypeScript)
+- [ ] Reactive caculation.
+- [ ] Spreadsheet function implements. 
+- [ ] Support merge cells.
+- [ ] Implement IBook interface.
+- [ ] Design a file saving format.
+- [ ] Implement a command bus to receive top layers' message.
+- [ ] Implement an asynchronous action center to run actions, such as sorting or filting. (Using `Web Worker`)
+- [ ] Implement actions such as sorting or filting.
+- [ ] Finish storage module.
+- [ ] Finish a simple IOC framework.
+- [ ] Implement a effective search algorithm to quickly locate any cell in a sheet (like RB tree or interval tree)  
+- [ ] Support OpenXML (MS Office) parsing (aks opening) and saving.
+
+### UI Layer
+
+- [x] Render headings.
+- [x] Render gridlines.
+- [x] Support scaling.
+- [ ] Implement a style rendering class.
+- [x] Render plain string cells.
+- [ ] Render fomated string cells.
+- [ ] Render cell objects such as pictures. (MS Office not support)
+- [ ] Render floating objects.
+- [ ] Render merge cells.
+- [ ] Custom rendering via passing different render options.
+- [x] Emit mouse events.
+- [ ] Emit keyboard events.
+- [ ] Emit touch events. (Future support touching devices)
+- [ ] Support Page Break Preview
+
+### View Layer
+
+- [x] Implement redux store.
+- [ ] Complete Ribbon.
+- [ ] Complete context menu.
+- [ ] Optimize context menu in electron. (Create a new window)
+- [ ] Complete dialogs such as font dialog, cell format dialog.
+- [ ] Add animation.
+- [ ] Connect view layer to core.
+- [ ] Finish business logics.
+
+
+
+
