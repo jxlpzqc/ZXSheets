@@ -33,7 +33,7 @@
     "webpack-dev-server": "^4.7.3"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "webpack build",
     "serve": "webpack-dev-server",
     "start": "electron ./main.js",
     "lint": "tslint \"src/**/*.{ts,tsx}\"",
