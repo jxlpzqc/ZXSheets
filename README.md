@@ -62,7 +62,7 @@ All modern browsers, IE excluded.
 
 ### Start Building
 
-#### Installation Dependency
+#### Install Dependency
 
 The dependencies are managed by `yarn`. Please type following on the console
 
