@@ -1,7 +1,7 @@
 import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TabLabels from './TabLabels'
+import TabLabels, { TabEvents } from './TabLabels'
 import RibbonTabPage from './RibbonTabPage'
 import { RibbonPalette } from './RibbonPalette'
 
@@ -39,7 +39,7 @@ export interface IMainRibbonProps {
   /**
    * Events for tab (first argument is index of tab)
    */
-  tabEvents?: React.AllHTMLAttributes<HTMLDivElement>,
+  tabEvents?: TabEvents,
   /**
    * array of elements which will be set in quick access button line
    */

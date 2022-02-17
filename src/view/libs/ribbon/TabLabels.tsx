@@ -3,12 +3,32 @@ import { Component } from "react"
 import { RibbonPalette } from "./RibbonPalette"
 import RibbonTabPage, { IRibbonTabPageProps } from "./RibbonTabPage"
 import styles from './index.module.css'
+import { ids } from "webpack"
+
+type RequiredDivAttribute = Required<React.AllHTMLAttributes<HTMLDivElement>>;
+
+export type DivEvents = Partial<
+  Pick<RequiredDivAttribute,
+    Exclude<{
+      [K in keyof RequiredDivAttribute]: RequiredDivAttribute[K] extends React.EventHandler<any>
+      ? K
+      : never
+    }[keyof RequiredDivAttribute], undefined>
+  >
+>;
+
+type TabEventHandler = (index: number, ...args: any[]) => void;
+
+export type TabEvents = {
+  [K in keyof DivEvents]: TabEventHandler;
+}
+
 
 interface ITabLabelsProps {
   tabs?: React.ReactElement<IRibbonTabPageProps>[],
   activeTab: number,
   palette: RibbonPalette,
-  events: React.AllHTMLAttributes<HTMLDivElement>,
+  events: TabEvents,
 }
 
 // tab labels component
@@ -32,20 +52,23 @@ export default class TabLabels extends Component<ITabLabelsProps> {
         color: palette.inActiveTab || '#ffffff',
       }
 
-      const tabEvents = isEnable ? this.props.events : {}
-      const events: any = {}
+      const tabEvents = isEnable ? this.props.events : undefined
+      const events: DivEvents | {} = {};
 
-      // filter
-      for (const key in tabEvents) {
-        if (tabEvents.hasOwnProperty(key)) {
-          // @ts-ignore
-          const eventTmp = tabEvents[key]
+      if (!!tabEvents) {
+        for (const key in tabEvents) {
+          if (tabEvents.hasOwnProperty(key)) {
+            // @ts-ignore
+            const eventTmp: TabEventHandler = tabEvents[key];
 
-          events[key] = () => {
-            eventTmp(i)
+            // @ts-ignore
+            events[key] = (e: any) => {
+              eventTmp(i, e);
+            }
           }
         }
       }
+
 
       if (!tabVisible) {
         return null

@@ -3,16 +3,19 @@ import React from 'react';
 import { MainRibbon, RibbonPalette, RibbonTabPage } from '../../libs/ribbon';
 
 export interface IRibbonProps {
+  currentBookName?: string;
+  enabled?: boolean;
 }
 
 export interface IRibbonState {
+  currentTab: number;
 }
 
 export default class Ribbon extends React.Component<IRibbonProps, IRibbonState> {
   constructor(props: IRibbonProps) {
     super(props);
-
     this.state = {
+      currentTab: 0
     }
   }
 
@@ -26,8 +29,20 @@ export default class Ribbon extends React.Component<IRibbonProps, IRibbonState> 
       tabBody: theme.palette.neutralLighter,
       backStageText: theme.palette.themeLight
     };
+
+    const titleName = this.props.currentBookName ? `${this.props.currentBookName} - ZXSheets` : 'ZXSheets'
+
     return (
-      <MainRibbon palette={ribbonPalette} text='Book1 - ZXSheet'>
+      <MainRibbon
+        palette={ribbonPalette}
+        text={titleName}
+        currentTab={this.state.currentTab}
+        tabEvents={{
+          onClick: (key) => { this.setState({ currentTab: key }) }
+        }}
+        enabled={this.props.enabled}
+        
+      >
         <RibbonTabPage text='开始'>
 
         </RibbonTabPage>
