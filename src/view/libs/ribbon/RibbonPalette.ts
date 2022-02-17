@@ -1,6 +1,7 @@
 interface FullRibbonPalette {
   main: string;
   inActiveTab: string;
+  tabHover: string;
   tabBody: string;
   backStageButton: string;
   backStageText: string;

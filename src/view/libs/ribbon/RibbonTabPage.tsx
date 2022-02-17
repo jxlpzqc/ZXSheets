@@ -1,29 +1,28 @@
 import styles from './index.module.css'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { RibbonPalette } from './RibbonPalette'
 
 export interface IRibbonTabPageProps {
   /**
    * text in tab label
    */
-  text: string,
+  text?: string,
   /**
    * when false - events inactive
    */
-  enable: boolean,
+  enabled?: boolean,
   /**
    * when false - component invisible
    */
-  visible: boolean,
+  visible?: boolean,
   /**
    * events of component
    */
-  events: React.AllHTMLAttributes<HTMLDivElement>,
+  events?: React.AllHTMLAttributes<HTMLDivElement>,
   /**
    * object with color schema
    */
-  palette: RibbonPalette,
+  palette?: RibbonPalette,
 
 
 }
@@ -39,15 +38,15 @@ export default class RibbonTabPage extends Component<IRibbonTabPageProps> {
       (child: any) => React.cloneElement(child, child.props.hasOwnProperty('palette') ? { palette } : undefined)
     )
 
-    const isEnable = this.props.enable
+    const isEnable = this.props.enabled
     const isVisible = this.props.visible
 
     const styleObj = {
-      backgroundColor: palette.tabBody || '#F1F1F1',
+      backgroundColor: palette?.tabBody || '#F1F1F1',
     }
 
     // events if component disabled
-    let events = isEnable ? this.props.events : {}
+    const events = isEnable ? this.props.events : {}
 
     if (!isVisible) {
       return null
@@ -63,7 +62,7 @@ export default class RibbonTabPage extends Component<IRibbonTabPageProps> {
 
 RibbonTabPage.defaultProps = {
   text: '',
-  enable: true,
+  enabled: true,
   visible: true,
   events: {},
   palette: {},

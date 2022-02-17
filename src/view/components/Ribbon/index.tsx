@@ -27,7 +27,8 @@ export default class Ribbon extends React.Component<IRibbonProps, IRibbonState> 
       activeBackStageButton: theme.palette.themeDark,
       backStageButton: theme.palette.themeSecondary,
       tabBody: theme.palette.neutralLighter,
-      backStageText: theme.palette.themeLight
+      backStageText: theme.palette.themeLight,
+      tabHover:theme.palette.themeDark
     };
 
     const titleName = this.props.currentBookName ? `${this.props.currentBookName} - ZXSheets` : 'ZXSheets'
