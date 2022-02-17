@@ -1,6 +1,17 @@
-.closeBtns{
+.closeBtns {
   position: absolute;
   right: 0;
   top: 0;
-  -webkit-app-region: no-drag; 
+  -webkit-app-region: no-drag;
+  z-index: 80000;
+}
+
+.layerStyle {
+  position: absolute;
+  z-index: 10000;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  pointer-events: none;
+
 }

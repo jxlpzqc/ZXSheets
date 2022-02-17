@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import file, { FileActionType } from "./file";
+import ribbon,{ RibbonActionType } from "./ribbon";
 import view, { ViewActionType } from "./view";
 
 export interface ActionMap {
@@ -8,12 +9,14 @@ export interface ActionMap {
 
 const actionsCreator = {
   view,
-  file
+  file,
+  ribbon
 }
 
 export const ActionTypes = {
   view: ViewActionType,
-  file: FileActionType
+  file: FileActionType,
+  ribbon:RibbonActionType
 }
 
 export default actionsCreator;

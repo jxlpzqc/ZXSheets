@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ButtonWithSmallImage, MainRibbon, RibbonGroup, RibbonTabPage } from './libs/ribbon'
 import ReactDOM from 'react-dom'
 import DefaultView from './layout/DefaultView';
-import { createTheme, loadTheme, ThemeProvider } from '@fluentui/react';
-import { WindowButtons } from './components/WindowButtons';
+import { createTheme, LayerHost, loadTheme, ThemeProvider } from '@fluentui/react';
+import WindowButtons from './components/WindowButtons';
 import classnames from './App.module.css';
 import { Sheet } from '../core/sheet/sheet';
 import { Context } from '../core/global/context';
@@ -11,8 +11,7 @@ import { SheetView } from '../ui/painter/view';
 import { isRunInElectron } from './utils';
 import { Provider } from 'react-redux';
 import store from './store'
-import WorkingArea  from './components/WorkingArea';
-
+import WorkingArea from './components/WorkingArea';
 // #217346
 const myTheme = createTheme({
   palette: {
@@ -44,6 +43,8 @@ const myTheme = createTheme({
 loadTheme(myTheme);
 
 
+export const stageLayerID = "__ZXSheets.Layers.Stage.Primary";
+
 export default class App extends React.Component<{}, {}> {
   constructor(props: {}) {
     super(props);
@@ -53,6 +54,7 @@ export default class App extends React.Component<{}, {}> {
 
 
   public render() {
+
     const containerStyle: React.CSSProperties = {
       height: '100%'
     };
@@ -62,12 +64,13 @@ export default class App extends React.Component<{}, {}> {
           <DefaultView>
             <WorkingArea></WorkingArea>
           </DefaultView>
-          {/* Show window buttons only in electron mode. */}
-          {isRunInElectron() &&
-            <div className={classnames.closeBtns}>
-              <WindowButtons></WindowButtons>
-            </div>}
         </div>
+        <LayerHost className={classnames.layerStyle} id={stageLayerID}></LayerHost>
+        {/* Show window buttons only in electron mode. */}
+        {isRunInElectron() &&
+          <div className={classnames.closeBtns}>
+            <WindowButtons></WindowButtons>
+          </div>}
       </Provider>
     );
   }

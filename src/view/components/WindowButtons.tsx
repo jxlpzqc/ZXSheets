@@ -1,32 +1,36 @@
 import { getTheme, IButtonStyles, IconButton, Stack } from '@fluentui/react';
 import * as React from 'react';
 import { ipcRenderer } from 'electron'
+import { connect } from 'react-redux';
+import { RootState } from '../store/state';
 
 export interface IWindowButtonsProps {
+  isStageOpen?: boolean;
   disabledClose?: boolean;
   disabledMaximumOrRestore?: boolean;
   disabledMinimum?: boolean;
 }
 
-export function WindowButtons(props: IWindowButtonsProps) {
+function WindowButtons(props: IWindowButtonsProps) {
 
   const theme = getTheme();
+  const fontColor = props.isStageOpen ? theme.palette.black : theme.palette.white;
   const btnStyle: IButtonStyles = {
     root: {
       height: 32,
       width: 46,
-      color: theme.palette.white
+      color: fontColor
     },
     icon: {
       fontSize: 12
     },
     rootHovered: {
-      background: theme.palette.themeDark,
-      color: theme.palette.white
+      background: props.isStageOpen ? theme.palette.neutralLight : theme.palette.themeDark,
+      color: fontColor
     },
     rootPressed: {
-      background: theme.palette.themeDarker,
-      color: theme.palette.white
+      background: props.isStageOpen ? theme.palette.neutralQuaternary : theme.palette.themeDarker,
+      color: fontColor
     }
   };
 
@@ -86,3 +90,7 @@ export function WindowButtons(props: IWindowButtonsProps) {
     </Stack >
   );
 }
+
+export default connect((state: RootState) => ({
+  isStageOpen: state.ribbon.backStageOpend
+}))(WindowButtons);

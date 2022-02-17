@@ -29,11 +29,12 @@ export interface IMainRibbonProps {
    */
   palette?: RibbonPalette,
   /**
-   * events of file button
+   * Display name for file button
    */
   fileButtonText?: string,
+  
   /**
-   * events of tab label (first argument is index of tab)
+   * events of file button
    */
   fileButtonEvents?: React.AllHTMLAttributes<HTMLDivElement>,
   /**
