@@ -30,7 +30,8 @@ export {
   ButtonWithLargeImageWithText,
   ButtonWithSmallImageWithText,
   DropDownWithSmallImageWithText,
-  Checkbox
+  Checkbox,
+  RibbonPalette
 }
 
 export {
@@ -45,6 +46,7 @@ export {
 }
 
 import {PopupMenu, MenuItem, MenuToggleItem, MenuSeparator, MenuDropDown} from './PopupMenu'
+import { RibbonPalette } from './RibbonPalette'
 export {PopupMenu, MenuItem, MenuToggleItem, MenuSeparator, MenuDropDown}
 
 export default MainRibbon
