@@ -1,21 +1,54 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 // import { detectBlur } from '../helpers'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from '../RibbonPalette';
 
-export default class DropDownWithSmallImage extends Component {
-  shouldComponentUpdate (nextProps) {
+
+export interface IDropDownWithSmallImageProps {
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when true - dropdown list is open
+   */
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+}
+
+export default class DropDownWithSmallImage extends Component<IDropDownWithSmallImageProps> {
+
+  static defaultProps: IDropDownWithSmallImageProps;
+
+  shouldComponentUpdate (nextProps:IDropDownWithSmallImageProps) {
     let prevString = JSON.stringify(this.props)
     let nextString = JSON.stringify(nextProps)
     return prevString !== nextString
   }
   
-  render () {
+  render() {
+    // @ts-ignore
     window.ribbonitem += 1
 
     const palette = this.props.palette
     const children = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
+      (child:any) => React.cloneElement(child, child.props.hasOwnProperty('palette') ? {palette} : undefined)
     )
 
     let isVisible = this.props.visible
@@ -44,24 +77,6 @@ export default class DropDownWithSmallImage extends Component {
   }
 }
 
-DropDownWithSmallImage.propTypes = {
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  // when true - dropdown list is open
-  active: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
-}
 
 DropDownWithSmallImage.defaultProps = {
   visible: true,

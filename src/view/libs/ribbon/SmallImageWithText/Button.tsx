@@ -1,25 +1,62 @@
 import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from '../RibbonPalette'
 
-export default class ButtonWithSmallImageWithText extends Component {
-  shouldComponentUpdate (nextProps) {
-    let prevString = JSON.stringify(this.props)
-    let nextString = JSON.stringify(nextProps)
+interface IButtonWithSmallImageWithTextProps {
+
+  /**
+   * text near the icon
+   */
+  text: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when true - dropdown list is open
+   */
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+}
+
+export default class ButtonWithSmallImageWithText extends Component<IButtonWithSmallImageWithTextProps> {
+
+  static defaultProps: IButtonWithSmallImageWithTextProps;
+
+  shouldComponentUpdate(nextProps: IButtonWithSmallImageWithTextProps) {
+    const prevString = JSON.stringify(this.props)
+    const nextString = JSON.stringify(nextProps)
     return prevString !== nextString
   }
-  
-  render () {
+
+  render() {
     // const palette = this.props.palette
+    // @ts-ignore
     window.ribbonitem += 1
 
-    let isVisible = this.props.visible
-    let isEnable = this.props.enabled
-    let isActive = this.props.active
+    const isVisible = this.props.visible
+    const isEnable = this.props.enabled
+    const isActive = this.props.active
     const text = this.props.text
     const backgroundImage = 'url(' + this.props.image + ')'
-
-    let events = this.props.events
+    
+    const events = this.props.events
 
     if (!isVisible) {
       return null
@@ -27,7 +64,7 @@ export default class ButtonWithSmallImageWithText extends Component {
     return (
       <div className={styles.button + ' ' + (isActive ? styles.active : '') + ' ' + (isEnable ? '' : styles.enable)}
         {...events}>
-        <div className={styles.image} style={{backgroundImage}}>
+        <div className={styles.image} style={{ backgroundImage }}>
         </div>
         <div className={styles.text}>
           {text}
@@ -35,24 +72,6 @@ export default class ButtonWithSmallImageWithText extends Component {
       </div>
     )
   }
-}
-
-ButtonWithSmallImageWithText.propTypes = {
-  // text near the icon
-  text: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  // when true - dropdown list is open
-  active: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
 }
 
 ButtonWithSmallImageWithText.defaultProps = {

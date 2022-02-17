@@ -1,10 +1,42 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class ButtonWithLargeImageWithText extends Component {
+export interface IButtonWithLargeImageWithTextProps{
+  /**
+   * text under the icon
+   */
+  text: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when true - button is pressed
+   */
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: object,
+  /**
+   * object with color schema
+   */
+  palette: object,
+}
 
-  shouldComponentUpdate (nextProps) {
+export default class ButtonWithLargeImageWithText extends Component<IButtonWithLargeImageWithTextProps> {
+
+  static defaultProps: IButtonWithLargeImageWithTextProps;
+  shouldComponentUpdate(nextProps: IButtonWithLargeImageWithTextProps) {
     let prevString = JSON.stringify(this.props)
     let nextString = JSON.stringify(nextProps)
     return prevString !== nextString
@@ -12,6 +44,7 @@ export default class ButtonWithLargeImageWithText extends Component {
 
   render () {
     // const palette = this.props.palette
+    // @ts-ignore
     window.ribbonitem += 1
     let isVisible = this.props.visible
     let isEnable = this.props.enabled
@@ -37,23 +70,6 @@ export default class ButtonWithLargeImageWithText extends Component {
   }
 }
 
-ButtonWithLargeImageWithText.propTypes = {
-  // text under the icon
-  text: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  // when true - button is pressed
-  active: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
-}
 
 ButtonWithLargeImageWithText.defaultProps = {
   text: '',

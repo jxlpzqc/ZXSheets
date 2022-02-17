@@ -1,18 +1,55 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class MenuDropDown extends Component {
-  shouldComponentUpdate (nextProps) {
+export interface IMenuDropDownProps {
+  /**
+   * name of menu item
+   */
+  text: string,
+  /**
+   * text in right part of menu item
+   */
+  hotKey: string,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * when true - component is active
+   */
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>
+  ,
+}
+
+export default class MenuDropDown extends Component<IMenuDropDownProps> {
+
+  static defaultProps: IMenuDropDownProps;
+
+  shouldComponentUpdate(nextProps: IMenuDropDownProps) {
     let prevString = JSON.stringify(this.props)
     let nextString = JSON.stringify(nextProps)
     return prevString !== nextString
   }
-  
-  render () {
+
+  render() {
     const isVisible = this.props.visible
     const isEnable = this.props.enabled
-    // const isActive = this.props.active
+    /**
+   * const isActive = this.props.active
+   */
     const text = this.props.text
     const hotKey = this.props.hotKey
     const backgroundImage = 'url(' + this.props.image + ')'
@@ -24,35 +61,17 @@ export default class MenuDropDown extends Component {
     }
     return (
       <div className={styles.menuItem + ' ' + (isEnable ? '' : styles.enable)} {...events} >
-        <div className={styles.image} style={{backgroundImage}} />
+        <div className={styles.image} style={{ backgroundImage }} />
         <div className={styles.text}>
           {text}
         </div>
         <div className={styles.hotKey}>
           {hotKey}
         </div>
-        <div className={styles.arrow} style={{visibility: 'hidden'}} />
+        <div className={styles.arrow} style={{ visibility: 'hidden' }} />
       </div>
     )
   }
-}
-
-MenuDropDown.propTypes = {
-  // name of menu item
-  text: PropTypes.string,
-  // text in right part of menu item
-  hotKey: PropTypes.string,
-  // url to image
-  image: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // when true - component is active
-  active: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element),
-  // events of component
-  events: PropTypes.object,
 }
 
 MenuDropDown.defaultProps = {

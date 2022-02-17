@@ -1,14 +1,50 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { useState } from 'react'
-import { detectBlur } from '../helpers'
+// import { detectBlur } from '../helpers'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from '../RibbonPalette'
 
-export default function SplitButtonWithSmallImage(props) {
+
+export interface ISplitButtonWithSmallImageProps {
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when true - dropdown list is open
+   */
+  active: boolean,
+  color: string,
+  /**
+   * events of the button
+   */
+  buttonEvents: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * events of arrow near the button
+   */
+  arrowEvents: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+
+  onClick: () => void;
+}
+
+export default function SplitButtonWithSmallImage(props:React.PropsWithChildren<ISplitButtonWithSmallImageProps>) {
     const [isActive, setIsActive] = useState(false)
 
     const palette = props.palette
     const children = React.Children.map(props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
+      (child:any) => React.cloneElement(child, child.props.hasOwnProperty('palette') ? {palette} : undefined)
     )
 
     let isEnable = props.enabled
@@ -38,7 +74,7 @@ export default function SplitButtonWithSmallImage(props) {
         <div className={styles.image} style={{backgroundImage}} {...buttonEvents}>
           <div style={{borderBottom, marginTop}} ></div>
         </div>
-        <div className={styles.arrow} tabIndex={-1}
+        <div className={styles.arrow} tabIndex={-1} {...arrowEvents}
           onClick={(e) => {
             e.stopPropagation()
             setIsActive(true)
@@ -55,27 +91,6 @@ export default function SplitButtonWithSmallImage(props) {
     )
 }
 
-SplitButtonWithSmallImage.propTypes = {
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  // when true - dropdown list is open
-  active: PropTypes.bool,
-  color: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  // events of the button
-  buttonEvents: PropTypes.object,
-  // events of arrow near the button
-  arrowEvents: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
-}
 
 SplitButtonWithSmallImage.defaultProps = {
   visible: true,

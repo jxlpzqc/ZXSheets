@@ -1,8 +1,33 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from '../RibbonPalette'
 
-export default function ButtonWithSmallImage(props) {
+export interface IButtonWithSmallImageProps {
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+}
+
+export default function ButtonWithSmallImage(props:React.PropsWithChildren<IButtonWithSmallImageProps>) {
     const isEnable = props.enabled
     const isActive = props.active
     const backgroundImage = 'url(' + props.image + ')'
@@ -19,18 +44,7 @@ export default function ButtonWithSmallImage(props) {
 }
 
 ButtonWithSmallImage.propTypes = {
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  active: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
+
 }
 
 ButtonWithSmallImage.defaultProps = {

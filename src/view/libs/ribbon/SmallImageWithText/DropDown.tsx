@@ -1,33 +1,68 @@
-import styles from './index.css'
-import React, { useState } from 'react'
+import styles from './index.module.css'
+import React, { ReactElement, useState } from 'react'
 import PropTypes from 'prop-types'
+import { RibbonPalette } from '../RibbonPalette'
 
-export default function DropDownWithSmallImageWithText(props) {
+interface IDropDownWithSmallImageWithText {
+
+  /**
+   * text near the icon
+   */
+  text: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * url to image
+   */
+  image: string,
+  /**
+   * when true - dropdown list is open
+   */
+  active: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>,
+  /**
+   * object with color schema
+   */
+  palette: RibbonPalette,
+  children: ReactElement | ReactElement[]
+}
+
+export default function DropDownWithSmallImageWithText(props: IDropDownWithSmallImageWithText) {
   // shouldComponentUpdate (nextProps) {
   //   let prevString = JSON.stringify(this.props)
   //   let nextString = JSON.stringify(nextProps)
   //   return prevString !== nextString
   // }
 
-    window.ribbonitem += 1
-    
-    const [isActive, setIsActive] = useState(false)
+  // @ts-ignore
+  window.ribbonitem += 1
 
-    const palette = props.palette
-    const children = React.Children.map(props.children,
-      (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? {palette} : null)
-    )
+  const [isActive, setIsActive] = useState(false)
 
-    let isVisible = props.visible
-    let isEnable = props.enabled
-    const text = props.text
-    const backgroundImage = 'url(' + props.image + ')'
+  const palette = props.palette
+  const children = React.Children.map(props.children,
+    (child) => React.cloneElement(child, child.props.hasOwnProperty(palette) ? { palette } : undefined)
+  )
 
-    let events = props.events
+  const isVisible = props.visible
+  const isEnable = props.enabled
+  const text = props.text
+  const backgroundImage = 'url(' + props.image + ')'
 
-    if (!isVisible) {
-      return null
-    }
+  const events = props.events
+
+  if (!isVisible) {
+    return null
+  }
   return (
     <div className={styles.dropDown + ' ' + (isActive ? styles.active : '') + ' ' + (isEnable ? '' : styles.enable)}
       tabIndex={-1}
@@ -36,7 +71,8 @@ export default function DropDownWithSmallImageWithText(props) {
       }} >
       <div onClick={() => {
         setIsActive(true)
-      }}>
+      }}
+      {...events}>
         <div className={styles.image} style={{ backgroundImage }} >
         </div>
         <div className={styles.text}>
@@ -52,27 +88,6 @@ export default function DropDownWithSmallImageWithText(props) {
       </div>}
     </div>
   )
-}
-
-DropDownWithSmallImageWithText.propTypes = {
-  // text near the icon
-  text: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // url to image
-  image: PropTypes.string,
-  // when true - dropdown list is open
-  active: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
-  // events of component
-  events: PropTypes.object,
-  // object with color schema
-  palette: PropTypes.object,
 }
 
 DropDownWithSmallImageWithText.defaultProps = {

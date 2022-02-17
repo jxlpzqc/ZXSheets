@@ -1,15 +1,38 @@
-import styles from './index.css'
+import styles from './index.module.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class MenuSeparator extends Component {
-  shouldComponentUpdate (nextProps) {
+export interface IMenuSeparatorProps {
+
+  /**
+   * text in the separator
+   */
+  text: string,
+  /**
+   * when false - component invisible
+   */
+  visible: boolean,
+  /**
+   * when false - events inactive
+   */
+  enabled: boolean,
+  /**
+   * events of component
+   */
+  events: React.AllHTMLAttributes<HTMLDivElement>
+}
+
+export default class MenuSeparator extends Component<IMenuSeparatorProps> {
+
+  static defaultProps: IMenuSeparatorProps;
+
+  shouldComponentUpdate(nextProps: IMenuSeparatorProps) {
     let prevString = JSON.stringify(this.props)
     let nextString = JSON.stringify(nextProps)
     return prevString !== nextString
   }
-  
-  render () {
+
+  render() {
     const isVisible = this.props.visible
     const isEnable = this.props.enabled
     const text = this.props.text
@@ -29,16 +52,6 @@ export default class MenuSeparator extends Component {
   }
 }
 
-MenuSeparator.propTypes = {
-  // text in the separator
-  text: PropTypes.string,
-  // when false - component invisible
-  visible: PropTypes.bool,
-  // when false - events inactive
-  enabled: PropTypes.bool,
-  // events of component
-  events: PropTypes.object,
-}
 
 MenuSeparator.defaultProps = {
   visible: true,
