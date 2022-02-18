@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import Rxjs, { Observable, takeUntil, race, of, mapTo, merge, mergeMapTo, from, take, map } from 'rxjs';
+import Rxjs, { Observable, takeUntil, race, of, mapTo, mergeMap,switchMap, merge, mergeMapTo, from, take, map } from 'rxjs';
 import { ofType, StateObservable } from "redux-observable";
 import { RootState } from "../state";
 import Actions, { ActionTypes } from "../actions";
@@ -30,7 +30,7 @@ async function fakeGetLocalTemplate(): Promise<IBookTemplateViewModel[]> {
       setTimeout(resolve, time);
     });
   };
-  await delay(3000);
+  await delay(2000);
 
   return fakeLocalTemplate;
 }
@@ -53,7 +53,7 @@ function fetchLocalTemplateEpic(action$: Observable<AnyAction>, store$: StateObs
 
   return action$.pipe(
     ofType(ActionTypes.ribbon.fetchLocalTemplate),
-    mergeMapTo(
+    switchMap(u =>
       merge(
         of(
           RibbonActions.__changeRibbon({
@@ -75,7 +75,7 @@ function fetchRemoteTemplateEpic(action$: Observable<AnyAction>, store$: StateOb
 
   return action$.pipe(
     ofType(ActionTypes.ribbon.fetchRemoteTemplate),
-    mergeMapTo(
+    switchMap(u=>
       merge(
         from([
           RibbonActions.__changeRibbon({
