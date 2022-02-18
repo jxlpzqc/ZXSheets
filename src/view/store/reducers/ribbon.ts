@@ -20,11 +20,16 @@ const reducer: Reducer<TFileState> = (state = ribbonState, action) => {
         ...state,
         disabled: payload
       };
-    case '__ribbon':
+    case ActionTypes.ribbon.changeActiveStageTab:
+      return {
+        ...state,
+        activeStageTab: payload
+      };
+    case ActionTypes.ribbon.__changeRibbon:
       return {
         ...state,
         ...payload
-      }
+      };
     default:
       return state;
   }

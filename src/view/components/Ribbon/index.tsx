@@ -72,6 +72,18 @@ class Ribbon extends React.Component<IRibbonProps> {
           <RibbonTabPage text='公式'>
 
           </RibbonTabPage>
+          <RibbonTabPage text='数据'>
+
+          </RibbonTabPage>
+          <RibbonTabPage text='审阅'>
+
+          </RibbonTabPage>
+          <RibbonTabPage text='视图'>
+
+          </RibbonTabPage>
+          <RibbonTabPage text='帮助'>
+
+          </RibbonTabPage>
         </MainRibbon>
         <Stage></Stage>
       </>
@@ -87,7 +99,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state: RootState) => ({
   enabled: state.ribbon.disabled !== true,
   currentTab: state.ribbon.activeTab,
-  stageOpend: state.ribbon.backStageOpend
+  stageOpend: state.ribbon.backStageOpend,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
@@ -97,7 +109,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
   },
   onStageOpen() {
     dispatch(Actions.ribbon.changeBackStageOpend(true));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ribbon);

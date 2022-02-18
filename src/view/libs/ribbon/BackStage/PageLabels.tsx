@@ -3,16 +3,17 @@ import React, { Component } from 'react'
 import Page, { IBackStagePageProps } from './Page';
 import { RibbonPalette } from '../RibbonPalette';
 
-export interface IPageLabelsProps{
+export interface IPageLabelsProps {
 
   pages?: React.ReactElement<IBackStagePageProps>[],
   activePage: number,
   palette: RibbonPalette,
   events: React.AllHTMLAttributes<HTMLDivElement>,
+  onClick(index: number): void;
 }
 
 export default class PageLabels extends Component<IPageLabelsProps> {
-  static defaultProps: IPageLabelsProps;
+  static defaultProps: Partial<IPageLabelsProps>;
   render() {
     return (
       <div className={styles.labels}>
@@ -39,6 +40,7 @@ export default class PageLabels extends Component<IPageLabelsProps> {
             return <div
               key={i}
               className={styles.pageLabel}
+              onClick={() => { this.props.onClick(i) }}
               {...events}
               style={styleObj}>
               <div className={styles.inner}>
@@ -57,5 +59,5 @@ PageLabels.defaultProps = {
   pages: [],
   activePage: 0,
   palette: {},
-  events: {},
+  events: {}
 }

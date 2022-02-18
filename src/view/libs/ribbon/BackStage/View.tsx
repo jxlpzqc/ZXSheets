@@ -30,6 +30,7 @@ interface IBackStageViewProps {
    * events of component
    */
   events: React.AllHTMLAttributes<HTMLDivElement>
+  onTabClick?: (e: number) => void;
 }
 
 export default class BackStageView extends Component<IBackStageViewProps> {
@@ -62,7 +63,9 @@ export default class BackStageView extends Component<IBackStageViewProps> {
         <PageLabels
           pages={pages}
           activePage={activePage}
-          palette={palette} />
+          palette={palette}
+          onClick={(e) => { this.props.onTabClick && this.props.onTabClick(e); }}
+        />
         {pages[activePage]}
       </div>
     )

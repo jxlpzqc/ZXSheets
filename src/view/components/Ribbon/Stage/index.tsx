@@ -8,13 +8,13 @@ import React, { useState } from 'react'
 type IStageProps = {
   enabled?: boolean,
   show?: boolean,
+  currentStageTab: number
   onClose(): void
+  onStageTabChange(t:number): void;
 }
 
-function Stage({ enabled, show, onClose }: IStageProps) {
-
-  const [currentpage, setCurrentpage] = useState(0);
-
+function Stage(props: IStageProps) {
+  const { enabled, show, onClose } = props;
   if (show) {
     return (
       <Layer styles={{
@@ -26,7 +26,8 @@ function Stage({ enabled, show, onClose }: IStageProps) {
           events={{
             onClick: onClose
           }}
-          currentPage={currentpage}
+          currentPage={props.currentStageTab}
+          onTabClick={(e)=>props.onStageTabChange(e)}
           enable={enabled}
           visible={true}
         >
@@ -34,7 +35,7 @@ function Stage({ enabled, show, onClose }: IStageProps) {
 
           </BackStagePage>
           <BackStagePage text='新建'>
-
+            <NewPage></NewPage>
           </BackStagePage>
           <BackStagePage text='打开'>
 
@@ -51,17 +52,22 @@ import Actions from '@/view/store/actions'
 import { connect } from 'react-redux';
 import { RootState } from '@/view/store/state'
 import { AnyAction, Dispatch } from 'redux'
-import { getRibbonEnabled } from '.'
+import { getRibbonEnabled } from '..'
+import NewPage from './NewPage'
 
 
 const mapStateToProps = (state: RootState) => ({
   enabled: getRibbonEnabled(state.ribbon.disabled, 'stage'),
   show: state.ribbon.backStageOpend,
+  currentStageTab: state.ribbon.activeStageTab
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
   onClose() {
     dispatch(Actions.ribbon.changeBackStageOpend(false));
+  },
+  onStageTabChange(tab: number) {
+    dispatch(Actions.ribbon.changeActiveStageTab(tab));
   },
 });
 

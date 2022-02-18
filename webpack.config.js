@@ -35,7 +35,11 @@ const config = {
       },
       {
         test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-        loader: 'url-loader'
+        loader: 'url-loader',
+        options: {
+          esModule: false,
+          limit: 1024 * 8
+        }
       }
     ]
   },
