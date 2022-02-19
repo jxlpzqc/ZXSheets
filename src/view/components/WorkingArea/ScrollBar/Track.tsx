@@ -1,9 +1,10 @@
 import { getTheme, Stack } from '@fluentui/react';
 import React from 'react'
 import Thumb from './Thumb';
+import classnames from './index.module.css'
 
 type ITrackProps = {
-  orientation: 'horizental' | 'vertical';
+  orientation: 'horizontal' | 'vertical';
   /**
    * A number between 0 and 1 indicating scrollbar position.
    */
@@ -29,14 +30,19 @@ export default function Track(props: ITrackProps) {
   const { palette } = getTheme();
 
   const trackStyle: React.CSSProperties = {
-    background: palette.neutralLighter
+    background: palette.neutralQuaternary,
   }
 
-
-
   return (
-    <div style={trackStyle}>
-      <Stack horizontal={props.orientation === 'horizental'}>
+    <div
+      className={props.orientation == 'horizontal' ? classnames.horizontalTrack : classnames.verticalTrack}
+      style={trackStyle}>
+      <Stack styles={{
+        root: {
+          width: '100%',
+          height: '100%'
+        }
+      }} horizontal={props.orientation === 'horizontal'}>
         <div onClick={props.onPageUp}></div>
         <Thumb orientation={props.orientation} length={props.length}></Thumb>
         <div onClick={props.onPageDown}></div>

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import { RootState } from '@/view/store/state'
-import { IButtonStyles, IconButton, IIconProps, Stack } from '@fluentui/react'
+import { getTheme, IButtonStyles, IconButton, IIconProps, Stack } from '@fluentui/react'
 import Track from './Track'
+import classnames from './index.module.css'
 
 type IScrollBarProps = {
-  orientation: 'horizental' | 'vertical',
+  orientation: 'horizontal' | 'vertical',
   total: number;
   current: number;
   currentPageSize: number;
@@ -13,18 +14,18 @@ type IScrollBarProps = {
 
 export const ScrollBar: React.FC<IScrollBarProps> = (props) => {
 
-  const horizental = (props.orientation === 'horizental');
+  const horizental = (props.orientation === 'horizontal');
 
   const lIcon: IIconProps = horizental ? {
-    iconName: ''
+    iconName: 'CaretSolidLeft'
   } : {
-    iconName: ''
+    iconName: 'CaretSolidUp'
   };
 
   const rIcon: IIconProps = horizental ? {
-    iconName: ''
+    iconName: 'CaretSolidRight'
   } : {
-    iconName: ''
+    iconName: 'CaretSolidDown'
   };
 
   const scrollBarBtnStyles: IButtonStyles = {
@@ -37,7 +38,7 @@ export const ScrollBar: React.FC<IScrollBarProps> = (props) => {
   const thumbOffset = 0;
 
   const onMove = (offset: number) => {
-    
+
   }
 
   const onPageDown = () => {
@@ -48,9 +49,30 @@ export const ScrollBar: React.FC<IScrollBarProps> = (props) => {
 
   }
 
+  const { palette } = getTheme();
+
+  const buttonStyles: IButtonStyles = {
+    root: {
+      height: '16px',
+      width: '16px',
+      border: `1px solid ${palette.neutralSecondary}`,
+      borderRadius: 0,
+      background: palette.white
+    },
+    icon: {
+      fontSize: '8px',
+      lineHeight: '16px',
+      color: palette.black
+    }
+  }
+
   return (
-    <Stack horizontal={horizental}>
-      <IconButton iconProps={lIcon}></IconButton>
+    <Stack className={classnames.root} styles={{
+      root: {
+        background: palette.neutralLight
+      }
+    }} horizontal={horizental}>
+      <IconButton iconProps={lIcon} styles={buttonStyles}></IconButton>
       <Track
         orientation={props.orientation}
         length={thumbLength}
@@ -59,7 +81,7 @@ export const ScrollBar: React.FC<IScrollBarProps> = (props) => {
         onPageDown={onPageDown}
         onPageUp={onPageUp}
       ></Track>
-      <IconButton iconProps={rIcon}></IconButton>
+      <IconButton iconProps={rIcon} styles={buttonStyles}></IconButton>
     </Stack>
 
   )

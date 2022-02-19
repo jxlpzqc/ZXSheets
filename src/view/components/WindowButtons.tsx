@@ -59,9 +59,11 @@ function WindowButtons(props: IWindowButtonsProps) {
   // listen for window state change
   const [maximized, setMaximized] = React.useState<boolean>(false);
 
-  ipc.once("main-window-maximized-changed", (e, state) => {
-    setMaximized(state);
-  })
+  React.useEffect(() => {
+    ipc.on("main-window-maximized-changed", (e, state) => {
+      setMaximized(state);
+    });
+  }, []);
 
   const closeBtnOnClick = () => {
     ipc.send("main-window-close");

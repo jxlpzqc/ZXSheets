@@ -36,7 +36,7 @@ const delay = (time: number) => {
 
 async function fakeGetLocalTemplate(): Promise<IBookTemplateViewModel[]> {
 
-  await delay(2000);
+  await delay(1000);
 
   return fakeLocalTemplate;
 }
@@ -102,7 +102,7 @@ function fetchRemoteTemplateEpic(action$: Observable<AnyAction>, store$: StateOb
 }
 
 async function createAndOpen(templateNameUrl: string) {
-  await delay(3000);
+  await delay(1000);
   const book = createBook(templateNameUrl);
   setActiveBook(book);
   return book;

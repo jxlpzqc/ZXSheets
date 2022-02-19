@@ -1,0 +1,12 @@
+.root {
+  padding: 4px;
+}
+
+.horizontalTrack {
+  width: 100%;
+
+}
+
+.verticalTrack {
+  height: 100%;
+}

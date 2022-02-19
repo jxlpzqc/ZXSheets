@@ -2,7 +2,7 @@ import { getTheme } from '@fluentui/react'
 import React from 'react'
 
 interface IThumbProps {
-  orientation: 'horizental' | 'vertical',
+  orientation: 'horizontal' | 'vertical',
   /**
    * between 0 and 1
    */
@@ -11,13 +11,17 @@ interface IThumbProps {
 
 
 export default function Thumb({ orientation, length }: IThumbProps) {
+  if (length < 0.1) length = 0.1;
+  if (length > 0.9) length = 0.9;
+
   const { palette } = getTheme();
   const thumbStyle: React.CSSProperties = {
     background: palette.white,
-    border: `1px solid ${palette.black}`
+    border: `1px solid ${palette.neutralSecondary}`,
+    boxSizing: 'border-box'
   }
 
-  if (orientation == 'horizental') {
+  if (orientation == 'horizontal') {
     thumbStyle.width = `${length * 100}%`;
     thumbStyle.height = '100%';
   }

@@ -33,12 +33,14 @@ const WorkingArea: React.FC<IWorkingAreaProps> = (props) => {
         <Stack horizontal>
           {/* TODO: Sheet tabs. */}
           <div></div>
-          <ScrollBar
-            orientation='horizental'
-            current={0}
-            currentPageSize={10}
-            total={100}
-          ></ScrollBar>
+          <Stack.Item grow={1}>
+            <ScrollBar
+              orientation='horizontal'
+              current={0}
+              currentPageSize={10}
+              total={100}
+            ></ScrollBar>
+          </Stack.Item>
         </Stack>
       </div >
     );
