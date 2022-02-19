@@ -2,6 +2,9 @@ import { Font } from "../base/defs/font";
 import { PageOrientation, PrintOption } from "../base/defs/printOption";
 import { Style } from "../base/defs/style";
 
+
+// TODO: Delete this file
+
 const dPrintOptions: PrintOption = {
     page: {
         orientation: PageOrientation.Portrait,

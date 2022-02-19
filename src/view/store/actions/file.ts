@@ -9,11 +9,11 @@ const ActionType = {
 export const FileActionType = ActionType;
 
 const actions = {
-  changeCurrentBook: (value: IBook) => ({
+  changeCurrentBook: (value?: IBook) => ({
     type: ActionType.changeCurrentBook,
     payload: value
   }),
-  changeCurrentSheet: (value: ISheet) => ({
+  changeCurrentSheet: (value?: ISheet) => ({
     type: ActionType.changeCurrentSheet,
     payload: value
   }),

@@ -59,6 +59,7 @@ typings/
 
 # Editor Setting
 .vscode/*
+.idea/*
 
 # dist
 dist/*

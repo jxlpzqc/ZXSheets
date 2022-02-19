@@ -1,8 +1,8 @@
 import { Reducer } from "redux";
 import { ActionTypes } from "../actions";
-import fileState, { TFileState } from '../state/file'
+import fileState, { IFileState } from '../state/file'
 
-const reducer: Reducer<TFileState> = (state = fileState, action) => {
+const reducer: Reducer<IFileState> = (state = fileState, action) => {
   const { payload } = action;
   switch (action.type) {
     case ActionTypes.file.changeCurrentBook:

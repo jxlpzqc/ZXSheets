@@ -8,7 +8,8 @@ const state = {
   focusedCellID: 'A1',
   focusedCellContent: '',
   leftTopCellID: 'A1',
-  shouldUpdate: true
+  shouldUpdate: true,
+  zoom: 1
 }
 
 

@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { ICell } from '@/core/base/cell';
 import { ISheet } from '@/core/base/sheet';
+import { Context } from '@/core/context';
 import SheetUI from '@/ui';
-import { Context } from '@/core/global/context'
-import { connect } from 'react-redux';
-import { RootState } from '@/view/store/state';
-import { AnyAction, Dispatch } from 'redux';
 import Actions from '@/view/store/actions';
+import { RootState } from '@/view/store/state';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
 
 export interface ISheetUIWrapperProps {
   /**
@@ -14,6 +13,7 @@ export interface ISheetUIWrapperProps {
    */
   sheet: string | ISheet;
   focusedCellID: string;
+  zoom: number;
   // Useless
   // focusedCellContent?: string;
   selection: string[];
@@ -78,8 +78,8 @@ class SheetUIWrapper extends React.Component<ISheetUIWrapperProps, ISheetUIWrapp
 
 
   componentDidUpdate(preProps: ISheetUIWrapperProps) {
-    if (this.props.leftTopCellID !== preProps.leftTopCellID || this.props.shouldUpdate) {
-
+    if (this.props.leftTopCellID !== preProps.leftTopCellID || this.props.zoom !== preProps.zoom || this.props.shouldUpdate) {
+      this.sheetUI!.scale = this.props.zoom;
       this.sheetUI!.startCellIndex = this.props.leftTopCellID;
       // draw and call finish update event
       this.sheetUI?.draw();
@@ -113,7 +113,8 @@ const mapStateToProps = (state: RootState) => ({
   focusedCellID: state.view.focusedCellID,
   selection: state.view.selection,
   leftTopCellID: state.view.leftTopCellID,
-  shouldUpdate: state.view.shouldUpdate
+  shouldUpdate: state.view.shouldUpdate,
+  zoom: state.view.zoom
 
 });
 

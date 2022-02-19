@@ -1,5 +1,4 @@
 import { IBook } from "@/core/base/book";
-import { ISheet } from "@/core/base/sheet";
 import { RootState } from "../state";
 
 const ActionType = {
@@ -10,6 +9,7 @@ const ActionType = {
   fetchLocalTemplate: 'ribbon/fetchLocalTemplate',
   fetchRemoteTemplate: 'ribbon/fetchRemoteTemplate',
   cancelFetchRemoteTemplate: 'ribbon/cancelRemoteTemplate',
+  newFile: 'ribbon/newFile',
   __changeRibbon: '__ribbon'
 }
 
@@ -31,6 +31,10 @@ const actions = {
   changeActiveStageTab: (value: number) => ({
     type: ActionType.changeActiveStageTab,
     payload: value
+  }),
+  newFile: (url: string) => ({
+    type: ActionType.newFile,
+    payload: url
   }),
   fetchLocalTemplate: () => ({ type: ActionType.fetchLocalTemplate }),
   fetchRemoteTemplate: () => ({ type: ActionType.fetchRemoteTemplate }),

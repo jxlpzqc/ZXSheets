@@ -1,6 +1,6 @@
 import { ICell } from "../base/cell";
 import { IRange } from "../base/range";
-import { Context } from "../global/context";
+import { Context } from "../context";
 
 
 const singleCellRe = /^\$?([a-zA-Z]+)\$?(\d+)$/;

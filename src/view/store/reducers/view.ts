@@ -51,6 +51,11 @@ const reducer: Reducer<TViewState> = (state = viewState, action) => {
         ...state,
         shouldUpdate:false
       }
+    case ActionTypes.view.changeZoom:
+      return {
+        ...state,
+        zoom: payload
+      };
 
     case '__view':
       return {

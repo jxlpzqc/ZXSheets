@@ -3,13 +3,14 @@ import { ActionMap } from ".";
 import { ICell } from "../../../core/base/cell";
 
 const ActionType = {
-  changeActiveRibbonTab: 'changeActiveRibbonTab',
-  changeEnabled: 'changeEnabled',
-  changeSelectedSheetID: 'changeSelectedSheetID',
-  changeSelection: 'changeSelection',
-  changeFocusedCellID: 'changeFocusedCellID',
-  changeFocusedCell: 'changeFocusedCell',
-  changeFocusedCellContent: 'changeFocusedCellContent',
+  changeActiveRibbonTab: 'view/changeActiveRibbonTab',
+  changeEnabled: 'view/changeEnabled',
+  changeSelectedSheetID: 'view/changeSelectedSheetID',
+  changeSelection: 'view/changeSelection',
+  changeFocusedCellID: 'view/changeFocusedCellID',
+  changeFocusedCell: 'view/changeFocusedCell',
+  changeFocusedCellContent: 'view/changeFocusedCellContent',
+  changeZoom: 'view/changeZoom',
   startUpdate: 'view/startUpdate',
   finishUpdate: 'view/finishUpdate'
 }
@@ -39,6 +40,10 @@ const actions = {
   }),
   changeFocusedCellContent: (value: string) => ({
     type: ActionType.changeFocusedCellContent,
+    payload: value
+  }),
+  changeZoom: (value: number) => ({
+    type: ActionType.changeZoom,
     payload: value
   }),
   startUpdate: () => ({

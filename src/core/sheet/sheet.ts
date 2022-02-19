@@ -6,7 +6,7 @@ import { Cell } from "./cell";
 import { RangeDef } from "../base/defs/rangedef";
 import { RowDef } from "../base/defs/rowdef";
 import { Style } from "../base/defs/style";
-import { Defaults } from "../global/defaults";
+import { Defaults } from "../context/defaults";
 import { exactIndex, indexLetterToNumber } from "./utils";
 
 export class Sheet implements ISheet {

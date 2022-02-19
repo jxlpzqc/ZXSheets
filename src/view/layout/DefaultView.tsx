@@ -29,7 +29,7 @@ const DefaultView: React.FunctionComponent<IDefaultViewProps> = (props) => {
           {props.children}
         </div>
       </Stack.Item>
-      <StatusBar desc='就绪' view='default' zoom={1} onzoom={(e) => { }} />
+      <StatusBar view='default'/>
 
     </Stack>
   )

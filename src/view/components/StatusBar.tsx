@@ -1,17 +1,20 @@
-import { ActionButton, CommandBarButton, getTheme, IButtonStyles, IconButton, ISliderStyleProps, ISliderStyles, IStyleFunctionOrObject, Slider, Stack } from '@fluentui/react';
+import Actions from '@/view/store/actions';
+import { ActionButton, getTheme, IButtonStyles, IconButton, ISliderStyleProps, ISliderStyles, IStyleFunctionOrObject, Slider, Stack } from '@fluentui/react';
 import * as React from 'react';
-import { LayoutContainer } from '../layout/LayoutContainer';
+import { connect } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
+import { RootState } from '../store/state';
 
 interface IStatusBarProps {
-  desc: string;
-  progress?: number;
+  desc?: string;
+  progress?: number | "none" | "indeterminate";
   view: string;
   zoom: number;
   onzoom: (zoom: number) => void;
 }
 
 const StatusBar: React.FunctionComponent<IStatusBarProps> = ({
-  desc, progress, view = 'default', zoom
+  desc, progress, view = 'default', zoom, onzoom
 }) => {
 
   const theme = getTheme();
@@ -57,23 +60,37 @@ const StatusBar: React.FunctionComponent<IStatusBarProps> = ({
         <Stack horizontal>
           <IconButton styles={btnStyle} size={10} iconProps={{
             iconName: 'Remove'
-          }} title="-" ariaLabel="-" disabled={false} />
+          }} title="-" ariaLabel="-" disabled={false}
+            onClick={() => { onzoom(zoom - 0.1) }} />
 
           <Stack.Item grow align='center'>
-            <Slider styles={sliderStyle} min={-10} max={10} showValue={false} />
+            <Slider value={zoom} styles={sliderStyle} min={0.2} max={5} showValue={false} />
           </Stack.Item>
           <IconButton styles={btnStyle} size={10} iconProps={{
             iconName: 'Add'
-          }} title="+" ariaLabel="+" disabled={false} />
+          }} title="+" ariaLabel="+" disabled={false}
+            onClick={() => { onzoom(zoom + 0.1) }} />
         </Stack>
       </Stack.Item>
 
       <Stack.Item>
-        <ActionButton styles={btnStyle} text={(zoom * 100).toString() + "%"} height={32} disabled={false} />
+        <ActionButton styles={btnStyle} text={(zoom * 100).toFixed(0) + "%"} height={32} disabled={false} />
       </Stack.Item>
     </Stack>
 
   )
 };
 
-export default StatusBar;
+
+const mapStateToProps = (state: RootState) => ({
+  desc: state.status.desc,
+  progress: state.status.progress,
+  zoom: state.view.zoom,
+})
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
+  onzoom: (zoom: number) => {
+    dispatch(Actions.view.changeZoom(zoom));
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(StatusBar)

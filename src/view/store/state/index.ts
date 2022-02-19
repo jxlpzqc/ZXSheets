@@ -1,11 +1,13 @@
 import view from './view'
 import file from './file'
 import ribbon from './ribbon'
+import status from './status'
 
 const rootState = {
   view,
   file,
-  ribbon
+  ribbon,
+  status
 };
 
 export type RootState = typeof rootState;

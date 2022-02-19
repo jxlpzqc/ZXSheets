@@ -1,5 +1,5 @@
 import SheetView from "..";
-import { Defaults } from "../../core/global/defaults";
+import { Defaults } from "../../core/context/defaults";
 import { exactIndex, indexLetterToNumber, indexNumberToLetter, isALeftTopOfB } from "../../core/sheet/utils";
 import { MouseEventArgs } from "./event";
 

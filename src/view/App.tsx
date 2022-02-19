@@ -5,14 +5,12 @@ import DefaultView from './layout/DefaultView';
 import { createTheme, LayerHost, loadTheme, ThemeProvider } from '@fluentui/react';
 import WindowButtons from './components/WindowButtons';
 import classnames from './App.module.css';
-import { Sheet } from '../core/sheet/sheet';
-import { Context } from '../core/global/context';
-import { SheetView } from '../ui/painter/view';
 import { isRunInElectron } from './utils';
 import { Provider } from 'react-redux';
 import store from './store'
 import WorkingArea from './components/WorkingArea';
-// #217346
+
+// Core theme color: #217346
 const myTheme = createTheme({
   palette: {
     themePrimary: '#217346',
@@ -62,14 +60,14 @@ export default class App extends React.Component<{}, {}> {
       <Provider store={store}>
         <div style={containerStyle}>
           <DefaultView>
-            <WorkingArea></WorkingArea>
+            <WorkingArea/>
           </DefaultView>
         </div>
-        <LayerHost className={classnames.layerStyle} id={stageLayerID}></LayerHost>
+        <LayerHost className={classnames.layerStyle} id={stageLayerID}/>
         {/* Show window buttons only in electron mode. */}
         {isRunInElectron() &&
           <div className={classnames.closeBtns}>
-            <WindowButtons></WindowButtons>
+            <WindowButtons/>
           </div>}
       </Provider>
     );

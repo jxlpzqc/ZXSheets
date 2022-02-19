@@ -7,7 +7,7 @@ export interface IBookTemplateViewModel {
   picUrl: string;
 }
 
-export interface TFileState {
+export interface IRibbonState {
   disabled: boolean | string[];
   backStageOpend: boolean;
   activeTab: number;
@@ -20,7 +20,7 @@ export interface TFileState {
 }
 
 
-const state: TFileState = {
+const state: IRibbonState = {
   disabled: false,
   backStageOpend: false,
   activeTab: 0,

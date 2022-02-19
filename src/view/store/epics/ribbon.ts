@@ -1,35 +1,41 @@
 import { AnyAction } from "redux";
-import Rxjs, { Observable, takeUntil, race, of, mapTo, mergeMap,switchMap, merge, mergeMapTo, from, take, map } from 'rxjs';
+import {
+  Observable, mergeMap, mergeAll, race, of, mapTo, switchMap, merge, from, take, map
+} from 'rxjs';
 import { ofType, StateObservable } from "redux-observable";
 import { RootState } from "../state";
 import Actions, { ActionTypes } from "../actions";
+
 const { ribbon: RibbonActions } = Actions;
 
-
 import { IBookTemplateViewModel } from "../state/ribbon";
+import { Context, createBook, setActiveBook } from "@/core/context";
 
 // const imgPath = require('@/view/components/Ribbon/Stage/blankbook.jpg');
 // console.log(imgPath);
 
 
-const fakeLocalTemplate: IBookTemplateViewModel[] = [{
-  name: '空白工作簿',
-  url: '(default)',
-  picUrl: require('@/view/components/Ribbon/Stage/blankbook.jpg')
-},
-{
-  name: '待办列表',
-  url: 'C:\\ZXSheets\\todo.zxt',
-  picUrl: require('../../components/Ribbon/Stage/blankbook.jpg')
-}];
+const fakeLocalTemplate: IBookTemplateViewModel[] = [
+  {
+    name: '空白工作簿',
+    url: '(default)',
+    picUrl: require('@/view/components/Ribbon/Stage/blankbook.jpg')
+  },
+  {
+    name: '待办列表',
+    url: 'C:\\ZXSheets\\todo.zxt',
+    picUrl: require('../../components/Ribbon/Stage/blankbook.jpg')
+  }
+];
+
+const delay = (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+};
 
 async function fakeGetLocalTemplate(): Promise<IBookTemplateViewModel[]> {
 
-  const delay = (time: number) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, time);
-    });
-  };
   await delay(2000);
 
   return fakeLocalTemplate;
@@ -37,19 +43,14 @@ async function fakeGetLocalTemplate(): Promise<IBookTemplateViewModel[]> {
 
 async function fakeGetRemoteTemplate(): Promise<IBookTemplateViewModel[]> {
 
-  const delay = (time: number) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, time);
-    });
-  };
   await delay(10000);
 
   return [];
 }
 
+// Epics
 
-
-function fetchLocalTemplateEpic(action$: Observable<AnyAction>, store$: StateObservable<RootState>) { // action$ is a stream of actions
+function fetchLocalTemplateEpic(action$: Observable<AnyAction>, store$: StateObservable<RootState>) {
 
   return action$.pipe(
     ofType(ActionTypes.ribbon.fetchLocalTemplate),
@@ -71,11 +72,10 @@ function fetchLocalTemplateEpic(action$: Observable<AnyAction>, store$: StateObs
   );
 }
 
-function fetchRemoteTemplateEpic(action$: Observable<AnyAction>, store$: StateObservable<RootState>) { // action$ is a stream of actions
-
+function fetchRemoteTemplateEpic(action$: Observable<AnyAction>, store$: StateObservable<RootState>) {
   return action$.pipe(
     ofType(ActionTypes.ribbon.fetchRemoteTemplate),
-    switchMap(u=>
+    switchMap(u =>
       merge(
         from([
           RibbonActions.__changeRibbon({
@@ -101,8 +101,41 @@ function fetchRemoteTemplateEpic(action$: Observable<AnyAction>, store$: StateOb
   );
 }
 
+async function createAndOpen(templateNameUrl: string) {
+  await delay(3000);
+  const book = createBook(templateNameUrl);
+  setActiveBook(book);
+  return book;
+}
+
+function newFileEpic(action$: Observable<AnyAction>, store$: StateObservable<RootState>) {
+  return action$.pipe(
+    ofType(ActionTypes.ribbon.newFile),
+    mergeMap(u => merge(
+      from([
+        Actions.status.__changeStatus({
+          desc: '正在创建文件',
+          progress: 'indeterminate'
+        }),
+        Actions.ribbon.changeDisabled(true),
+        Actions.ribbon.changeBackStageOpend(false),
+      ]),
+      from(createAndOpen(u.payload)).pipe(
+        mergeMap(p => from([
+          Actions.status.changeDefault(),
+          Actions.ribbon.changeDisabled(false),
+          Actions.file.changeCurrentBook(Context.book),
+          Actions.file.changeCurrentSheet(Context.sheet),
+        ]))
+      )
+    )),
+  )
+
+}
+
 
 export default [
   fetchLocalTemplateEpic,
-  fetchRemoteTemplateEpic
+  fetchRemoteTemplateEpic,
+  newFileEpic
 ]

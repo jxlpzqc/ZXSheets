@@ -8,7 +8,7 @@ type INewPageProps = {
   remoteTemplate: IBookTemplateViewModel[],
   loadingLocal: boolean;
   loadingRemote: boolean;
-  newBook(template: IBookTemplateViewModel): void;
+  newBook(templateUrl: IBookTemplateViewModel): void;
   fetchLocal(): void;
   fetchRemote(): void;
   cancel(): void;
@@ -103,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     dispatch(RibbonActions.cancelFetchRemoteTemplate());
   },
   newBook(template: IBookTemplateViewModel) {
-    // TODO:
+    dispatch(RibbonActions.newFile(template.url));
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(NewPage)

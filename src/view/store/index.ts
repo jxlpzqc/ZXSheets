@@ -1,6 +1,5 @@
 import { AnyAction, applyMiddleware, createStore } from "redux";
-import {createEpicMiddleware} from 'redux-observable';
-;
+import { createEpicMiddleware } from 'redux-observable';
 
 import reducers from "./reducers";
 import epics from './epics';
@@ -8,7 +7,7 @@ import { RootState } from "./state";
 
 
 
-const epicsMiddleware = createEpicMiddleware<AnyAction,AnyAction,RootState>();
+const epicsMiddleware = createEpicMiddleware<AnyAction, AnyAction, RootState>();
 
 const store = createStore(reducers, applyMiddleware(epicsMiddleware));
 

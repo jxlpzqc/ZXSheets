@@ -1,8 +1,8 @@
 import { Reducer } from "redux";
 import { ActionTypes } from "../actions";
-import ribbonState, { TFileState } from '../state/ribbon'
+import ribbonState, { IRibbonState } from '../state/ribbon'
 
-const reducer: Reducer<TFileState> = (state = ribbonState, action) => {
+const reducer: Reducer<IRibbonState> = (state = ribbonState, action) => {
   const { payload } = action;
   switch (action.type) {
     case ActionTypes.ribbon.changeActiveTab:

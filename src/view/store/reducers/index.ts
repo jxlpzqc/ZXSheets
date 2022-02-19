@@ -3,11 +3,13 @@ import { RootState } from "../state";
 import view from './view';
 import file from './file';
 import ribbon from "./ribbon";
+import status from "./status";
 
 const rootReducers = combineReducers<RootState>({
   view,
   file,
-  ribbon
+  ribbon,
+  status
 });
 
 export default rootReducers;
