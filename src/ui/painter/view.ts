@@ -180,34 +180,34 @@ export class SheetView {
         const s = this.getScaleFunction();
 
         ele.addEventListener('mousedown', (e) => {
-            const obj = this.PositionToObj(s(e.offsetX), s(e.offsetY));
+            const obj = this.PositionToObj((e.offsetX), (e.offsetY));
             handleMouseDown({
                 view: this,
                 item: obj,
-                x: s(e.offsetX),
-                y: s(e.offsetY),
+                x: (e.offsetX),
+                y: (e.offsetY),
                 e
             });
         });
 
         ele.addEventListener('mousemove', (e) => {
-            const obj = this.PositionToObj(s(e.offsetX), s(e.offsetY));
+            const obj = this.PositionToObj((e.offsetX), (e.offsetY));
             handleMouseMove({
                 view: this,
                 item: obj,
-                x: s(e.offsetX),
-                y: s(e.offsetY),
+                x: (e.offsetX),
+                y: (e.offsetY),
                 e
             });
         });
 
         ele.addEventListener('mouseup', (e) => {
-            const obj = this.PositionToObj(s(e.offsetX), s(e.offsetY));
+            const obj = this.PositionToObj((e.offsetX), (e.offsetY));
             handleMouseup({
                 view: this,
                 item: obj,
-                x: s(e.offsetX),
-                y: s(e.offsetY),
+                x: (e.offsetX),
+                y: (e.offsetY),
                 e
             });
         });
@@ -219,20 +219,21 @@ export class SheetView {
     public PositionToObj(x: number, y: number): SheetViewObj {
 
         const fillPointRecOffset = 8;
+        const s = this.getScaleFunction();
 
         if (this._showHeading) {
-            if (x <= headingW && y <= headingH) {
+            if (x <= s(headingW) && y <= s(headingH)) {
                 return {
                     type: 'all'
                 }
             }
-            else if (x <= headingW) {
+            else if (x <= s(headingW)) {
                 return {
                     type: 'row',
                     desc: (this._startCellIndex[1] + (this.rowYs.findIndex(u => u >= y)) - 1).toString()
                 }
             }
-            else if (y <= headingH) {
+            else if (y <= s(headingH)) {
                 return {
                     type: 'column',
                     desc: indexNumberToLetter(this._startCellIndex[0] + (this.columnsXs.findIndex(u => u >= x)) - 1)

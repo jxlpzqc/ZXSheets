@@ -77,7 +77,8 @@ export function indexLetterToNumber(letterIndex: string): number {
 export function indexNumberToLetter(index: number): string {
     const chars: number[] = [];
     while (index != 0) {
-        const cl = index % 26;
+        let cl = index % 26;
+        if (cl === 0) cl = 26;
         chars.push(cl);
         index = (index - cl) / 26;
     }
