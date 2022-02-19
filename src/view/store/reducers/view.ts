@@ -26,20 +26,15 @@ const reducer: Reducer<TViewState> = (state = viewState, action) => {
         ...state,
         selectedSheetID: payload
       }
-    case ActionTypes.view.changeFocusedCellID:
-      return {
-        ...state,
-        focusedCellID: payload
-      }
     case ActionTypes.view.changeFocusedCell:
       return {
         ...state,
         focusedCell: payload
       }
-    case ActionTypes.view.changeFocusedCellContent:
+    case ActionTypes.view.changeTempFocusedCellContent:
       return {
         ...state,
-        focusedCellContent: payload
+        tempFocusedCellContent: payload
       }
     case ActionTypes.view.startUpdate:
       return {
@@ -57,7 +52,7 @@ const reducer: Reducer<TViewState> = (state = viewState, action) => {
         zoom: payload
       };
 
-    case '__view':
+    case ActionTypes.view.__changeView:
       return {
         ...state,
         ...payload

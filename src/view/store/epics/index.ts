@@ -4,9 +4,11 @@ import { RootState } from "../state";
 
 
 import ribbonEpics from "./ribbon";
+import viewEpics from './view';
 
 const epics = [
-  ...ribbonEpics
+  ...ribbonEpics,
+  ...viewEpics
 ]
 
 const rootEpic = combineEpics<AnyAction,AnyAction,RootState>(...epics);

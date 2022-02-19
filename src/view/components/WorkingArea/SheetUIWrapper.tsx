@@ -126,7 +126,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     dispatch(Actions.view.changeSelection(selection));
   },
   onFocusedCellContentChange(newContent: string): void {
-    dispatch(Actions.view.changeFocusedCellContent(newContent));
+    dispatch(Actions.view.changeTempFocusedCellContent(newContent));
   },
   onUpdateFinish() {
     dispatch(Actions.view.finishUpdate());

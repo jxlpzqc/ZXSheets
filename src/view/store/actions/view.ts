@@ -1,6 +1,7 @@
 import { AnyAction } from "redux"
 import { ActionMap } from ".";
 import { ICell } from "../../../core/base/cell";
+import { RootState } from "../state";
 
 const ActionType = {
   changeActiveRibbonTab: 'view/changeActiveRibbonTab',
@@ -9,10 +10,13 @@ const ActionType = {
   changeSelection: 'view/changeSelection',
   changeFocusedCellID: 'view/changeFocusedCellID',
   changeFocusedCell: 'view/changeFocusedCell',
-  changeFocusedCellContent: 'view/changeFocusedCellContent',
+  changeTempFocusedCellContent: 'view/changeTempFocusedCellContent',
+  submitContentChange: 'view/submitContentChange',
+  cancelContentChange: 'view/cancelContentChange',
   changeZoom: 'view/changeZoom',
   startUpdate: 'view/startUpdate',
-  finishUpdate: 'view/finishUpdate'
+  finishUpdate: 'view/finishUpdate',
+  __changeView: '__view'
 }
 
 export const ViewActionType = ActionType;
@@ -38,8 +42,8 @@ const actions = {
     type: ActionType.changeFocusedCellID,
     payload: value
   }),
-  changeFocusedCellContent: (value: string) => ({
-    type: ActionType.changeFocusedCellContent,
+  changeTempFocusedCellContent: (value: string) => ({
+    type: ActionType.changeTempFocusedCellContent,
     payload: value
   }),
   changeZoom: (value: number) => ({
@@ -52,6 +56,16 @@ const actions = {
   finishUpdate: () => ({
     type: ActionType.finishUpdate
   }),
+  submitContentChange: () => ({
+    type: ActionType.submitContentChange
+  }),
+  cancelContentChange: () => ({
+    type: ActionType.cancelContentChange
+  }),
+  __changeView: (view: Partial<RootState['view']>) => ({
+    type: ActionType.__changeView,
+    payload: view
+  })
 
 };
 

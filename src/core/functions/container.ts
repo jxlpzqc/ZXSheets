@@ -130,8 +130,8 @@ export function GetFunctionContainer(): FunctionContainer {
     return FunctionContainer.getInstance();
 }
 
-
+/*
+ * Import function files
+ */
 import './impl/operators';
 import './impl/sum';
-
-console.log(FunctionContainer.getInstance());

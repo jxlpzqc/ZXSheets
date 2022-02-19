@@ -21,6 +21,8 @@ export interface IFormulaBarProps {
   onNameBoxTextChange(value: string): void;
   cellContent?: string;
   onCellContentChange(value: string): void;
+  submit(): void;
+  cancel(): void;
 }
 
 export interface IFormulaBarState {
@@ -82,14 +84,14 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
             iconProps={{
               iconName: 'Cancel'
             }}
-            styles={cmdButtonsStyles}
-            disabled={!this.state.showButtons} />
+            onClick={this.props.cancel}
+            styles={cmdButtonsStyles} />
           <IconButton
             iconProps={{
               iconName: 'CheckMark'
             }}
-            styles={cmdButtonsStyles}
-            disabled={!this.state.showButtons} />
+            onClick={this.props.submit}
+            styles={cmdButtonsStyles} />
           <IconButton
             iconProps={{
               // Replace to 'fx' icon
@@ -118,12 +120,18 @@ class FormulaBar extends React.Component<IFormulaBarProps, IFormulaBarState> {
 
 const mapStateToProps = (state: RootState) => ({
   nameBoxText: state.view.focusedCellID,
-  cellContent: state.view.focusedCellContent
+  cellContent: state.view.tempFocusedCellContent
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNameBoxTextChange: (value: string) => { dispatch(Actions.view.changeFocusedCellID(value)); },
-  onCellContentChange: (value: string) => { dispatch(Actions.view.changeFocusedCellContent(value)); }
+  onCellContentChange: (value: string) => { dispatch(Actions.view.changeTempFocusedCellContent(value)); },
+  submit() {
+    dispatch(Actions.view.submitContentChange())
+  },
+  cancel() {
+    dispatch(Actions.view.cancelContentChange())
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormulaBar)

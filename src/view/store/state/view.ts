@@ -6,7 +6,7 @@ const state = {
   enabled: true,
   selection: ['A1', 'A1'],
   focusedCellID: 'A1',
-  focusedCellContent: '',
+  tempFocusedCellContent: '',
   leftTopCellID: 'A1',
   shouldUpdate: true,
   zoom: 1
