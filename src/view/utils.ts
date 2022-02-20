@@ -1,3 +1,3 @@
 export function isRunInElectron(): boolean {
-  return !!(window?.process?.versions?.electron);
+  return !!(ZXSHEETS_PLATFORM === 'electron');
 }

@@ -1,10 +1,22 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 
+const targetStr = process.env['ZXSHEETS_TARGET'] === 'electron' ? 'electron' : 'web';
+
+
+const definePlugin = new DefinePlugin({
+  ZXSHEETS_PLATFORM: JSON.stringify(targetStr)
+});
+
+/**
+ * Webpack config.
+ * @type {import('webpack').Configuration}
+ */
 const config = {
   mode: 'development',
   entry: './src/entry/main.ts',
-  target: 'electron-renderer',
+  target: 'web',
   module: {
     rules: [
       {
@@ -51,13 +63,15 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'zxsheet.js'
+    filename: 'zxsheets.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/entry/index.html"
-    })
+    }),
+    definePlugin
   ]
 };
+
 
 module.exports = config;

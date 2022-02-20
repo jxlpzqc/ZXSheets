@@ -1,6 +1,5 @@
 import { getTheme, IButtonStyles, IconButton, Stack } from '@fluentui/react';
 import * as React from 'react';
-import { ipcRenderer } from 'electron'
 import { connect } from 'react-redux';
 import { RootState } from '../store/state';
 
@@ -46,27 +45,27 @@ function WindowButtons(props: IWindowButtonsProps) {
     }
   }
 
-  const ipc = ipcRenderer;
 
   const minimizeBtnOnClick = () => {
-    ipc.send("main-window-minimize");
+    window.ElectronPreload?.minimizeMainWindow();
   };
 
   const maximizeBtnOnClick = () => {
-    ipc.send("main-window-maximize");
+    window.ElectronPreload?.maximizeOrRestoreMainWindow();
   };
 
   // listen for window state change
   const [maximized, setMaximized] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    ipc.on("main-window-maximized-changed", (e, state) => {
+    window.ElectronPreload?.bindWindowMaximizedChange((state) => {
+
       setMaximized(state);
     });
   }, []);
 
   const closeBtnOnClick = () => {
-    ipc.send("main-window-close");
+    window.ElectronPreload?.closeMainWindow();
   };
 
   return (
