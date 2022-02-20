@@ -48,15 +48,23 @@
 yarn
 ```
 
-#### 用于调试
+#### 桌面端调试
+1. 启动webpack调试服务器
+```batch
+npm run serve:electron
+```
+2. 编译Electron主进程脚本并启动Electron项目
+```batch
+npm run electron
+```
+
+
+#### 浏览器调试
 1. 启动webpack调试服务器
 ```batch
 npm run serve
 ```
-2. 启动Electron项目
-```batch
-npm start
-```
+2. 启动浏览器，访问http://localhost:8080/
 
 #### ~~用于打包~~
 ```batch

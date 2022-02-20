@@ -33,7 +33,7 @@ The final implementation is similar to IoC framework.
 
 
 
-## Desktop Support
+### Desktop Support
 
 - Windows >= 7
 
@@ -70,20 +70,31 @@ The dependencies are managed by `yarn`. Please type following on the console
 yarn
 ```
 
-#### Debug
+#### Debug For Electron
 
 1. Start the WebPack debugging server
+
+
+```batch
+npm run serve:electron
+```
+
+2. Compile electron main script and start the electron project
+
+```batch
+npm run electron
+```
+
+#### Debug For Browser
+
+1. Start the WebPack debugging server
+
 
 ```batch
 npm run serve
 ```
 
-2. Start the Electron project
-
-```batch
-npm start
-```
-
+2. Open browser and enter http://localhost:8080/ to debug the project.
 
 #### ~~Package~~
 
