@@ -7,5 +7,9 @@ import React from "react";
 
 initializeIcons();
 
+console.log(require('../view/libs/ribbon/assets/back.png'));
+console.log(require('../view/libs/ribbon/assets/dropdown.png'));
+console.log(require('../view/libs/ribbon/assets/more.png'));
+
 
 ReactDOM.render(React.createElement(App), document.getElementById("app")!);

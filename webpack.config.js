@@ -40,17 +40,18 @@ const config = {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName: '[path][name]-[local]-[hash:base64]'
+              localIdentName: '[local]-[hash:base64]'
             },
           }
         }]
       },
       {
         test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-        loader: 'url-loader',
-        options: {
-          esModule: false,
-          limit: 1024 * 8
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024 
+          }
         }
       }
     ]
