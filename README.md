@@ -13,6 +13,8 @@ English | [简体中文](./README.zh-Hans.md)
 
 ### Layers
 
+![Layers](https://s3.bmp.ovh/imgs/2022/02/0e51fe5347ecf30d.jpg)
+
 The project is seperated into 4 layers:
 
 - **Core Layer**: Handles spreadsheet-related business, such as storage, query, calculation of formula, and so on. Besides, There is a `Driver Sublayer`, which provides instances for many interfaces for extending `Core Layer` and handling platform-specific business logics. It also provides a entry for `Plugin Layer` to inject code into `Core Layer`.
